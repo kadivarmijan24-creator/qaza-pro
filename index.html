@@ -18,6 +18,24 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <link rel="stylesheet" href="style.css" />
+  <!-- Native Mobile App Fullscreen Meta Tags -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="QazaPro">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#040807">
+
+<!-- Offline Service Worker Loader -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js', { scope: './' })
+        .then((reg) => console.log('Offline Ready!', reg))
+        .catch((err) => console.error('SW Error:', err));
+    });
+  }
+</script>
 </head>
 <body class="bg-[#040807] text-slate-100 min-h-screen pb-28 antialiased selection:bg-amber-400 selection:text-black">
 
