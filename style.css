@@ -49,7 +49,7 @@ body {
   100% { width: 100%; }
 }
 
-/* Royal Themes */
+/* Royal Theme Styles */
 .royal-card {
   background: linear-gradient(145deg, rgba(8, 24, 20, 0.78) 0%, rgba(5, 14, 12, 0.92) 100%);
   backdrop-filter: blur(24px);
@@ -64,7 +64,7 @@ body {
   box-shadow: 0 0 35px -10px rgba(245, 158, 11, 0.2);
 }
 
-/* Makruh Card Specifics */
+/* Makruh Card States */
 .makruh-active {
   background: linear-gradient(135deg, rgba(76, 5, 25, 0.7) 0%, rgba(30, 7, 13, 0.85) 100%) !important;
   border-color: rgba(244, 63, 94, 0.5) !important;

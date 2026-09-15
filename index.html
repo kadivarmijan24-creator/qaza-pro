@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Qaza Pro | શાહી નમાઝ અને કઝા ટ્રેકર</title>
 
-  <!-- PWA Settings -->
+  <!-- PWA & Native App Meta Tags -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="QazaPro">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#040807">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2917/2917995.png">
@@ -18,24 +22,15 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <link rel="stylesheet" href="style.css" />
-  <!-- Native Mobile App Fullscreen Meta Tags -->
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="QazaPro">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#040807">
-
-<!-- Offline Service Worker Loader -->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js', { scope: './' })
-        .then((reg) => console.log('Offline Ready!', reg))
-        .catch((err) => console.error('SW Error:', err));
-    });
-  }
-</script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js', { scope: './' })
+          .then((reg) => console.log('Offline Ready!', reg))
+          .catch((err) => console.error('SW Error:', err));
+      });
+    }
+  </script>
 </head>
 <body class="bg-[#040807] text-slate-100 min-h-screen pb-28 antialiased selection:bg-amber-400 selection:text-black">
 
@@ -54,7 +49,7 @@
         QAZA<span class="text-amber-400">PRO</span>
       </h1>
       <p class="text-xs text-emerald-400/80 font-medium tracking-wider mt-1 splash-subtitle font-mono">
-        بِسْمِ اللهِ الرَّحْمٰનِ الرَّحِيْمِ
+        بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
       </p>
       <div class="w-28 h-1 bg-slate-900 rounded-full overflow-hidden mt-6 border border-emerald-500/20">
         <div class="h-full bg-gradient-to-r from-amber-400 to-emerald-400 splash-bar rounded-full"></div>
@@ -66,40 +61,25 @@
   <div class="fixed top-[-15%] left-[-10%] w-[380px] h-[380px] bg-emerald-600/15 rounded-full blur-[140px] pointer-events-none animate-pulse-slow"></div>
   <div class="fixed top-[30%] right-[-15%] w-[320px] h-[320px] bg-amber-500/10 rounded-full blur-[130px] pointer-events-none animate-pulse-slow"></div>
 
-  <!-- Header -->
-  <header class="sticky top-0 z-40 bg-[#040807]/85 backdrop-blur-2xl border-b border-emerald-500/15">
+  <!-- ================= CLEAN MINIMAL HEADER ================= -->
+  <header class="sticky top-0 z-40 bg-[#040807]/90 backdrop-blur-2xl border-b border-emerald-500/15">
     <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400 via-emerald-500 to-teal-700 p-[1.5px] shadow-lg shadow-emerald-950/60 transform hover:rotate-6 transition-transform">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 via-emerald-500 to-teal-700 p-[1.5px] shadow-lg shadow-emerald-950/60">
           <div class="w-full h-full bg-[#081311] rounded-[14px] flex items-center justify-center text-amber-300">
-            <i class="ph-fill ph-mosque text-2xl"></i>
+            <i class="ph-fill ph-mosque text-xl"></i>
           </div>
         </div>
         <div>
-          <div class="flex items-center gap-1.5">
-            <h1 class="text-base font-black tracking-wider text-white uppercase font-['Cinzel',serif]">QAZA<span class="text-amber-400">PRO</span></h1>
-            <span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/25">ROYAL</span>
-          </div>
+          <h1 class="text-base font-black tracking-wider text-white uppercase font-['Cinzel',serif] leading-tight">QAZA<span class="text-amber-400">PRO</span></h1>
           <p id="clock-live" class="text-[11px] text-emerald-400 font-mono font-bold tracking-wider">12:00:00 AM</p>
         </div>
       </div>
 
-      <div class="flex items-center gap-2">
-        <!-- Makruh Time Info Modal Button -->
-        <button onclick="openModal('makruh-modal')" class="w-9 h-9 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 flex items-center justify-center active:scale-90 transition-all shadow-md shadow-rose-950/30" title="મકરુહ વક્ત માહિતી">
-          <i class="ph-bold ph-warning-octagon text-base"></i>
-        </button>
-        <!-- Guide Button -->
-        <button onclick="openModal('guide-modal')" class="w-9 h-9 rounded-xl bg-amber-400/15 border border-amber-400/30 text-amber-300 flex items-center justify-center active:scale-90 transition-all shadow-md shadow-amber-950/30" title="કઝા પઢવાની રીત">
-          <i class="ph-bold ph-book-open text-base"></i>
-        </button>
-        <button onclick="toggleSound()" id="sound-btn" class="w-9 h-9 rounded-xl bg-emerald-950/40 border border-emerald-500/20 text-emerald-300 flex items-center justify-center active:scale-90 transition-all" title="સાઉન્ડ">
-          <i class="ph-bold ph-speaker-high text-base text-amber-400" id="sound-icon"></i>
-        </button>
-        <button onclick="openModal('setup-modal')" class="w-9 h-9 rounded-xl bg-emerald-950/40 border border-emerald-500/20 text-emerald-300 flex items-center justify-center active:scale-90 transition-all" title="સેટિંગ્સ">
-          <i class="ph-bold ph-faders text-base"></i>
-        </button>
-      </div>
+      <!-- Single All-in-One Menu Button -->
+      <button onclick="openModal('menu-modal')" class="w-10 h-10 rounded-2xl bg-emerald-950/40 border border-emerald-500/20 text-amber-300 flex items-center justify-center active:scale-90 transition-all shadow-md shadow-emerald-950/40" title="મેનૂ અને સેટિંગ્સ">
+        <i class="ph-bold ph-dots-three-vertical text-xl"></i>
+      </button>
     </div>
 
     <!-- Segmented Tab Navigation -->
@@ -118,21 +98,19 @@
   <!-- Main Container -->
   <main class="max-w-md mx-auto px-4 py-3 space-y-4">
 
-    <!-- ================= LIVE MAKRUH WAQT BANNER ================= -->
-    <div id="makruh-status-card" class="rounded-2xl p-3.5 border transition-all flex items-center justify-between shadow-lg">
-      <div class="flex items-center gap-3">
-        <div id="makruh-icon-box" class="w-10 h-10 rounded-xl flex items-center justify-center text-lg font-bold">
+    <!-- Live Makruh Waqt Banner -->
+    <div id="makruh-status-card" class="rounded-2xl p-3 border transition-all flex items-center justify-between shadow-lg">
+      <div class="flex items-center gap-2.5">
+        <div id="makruh-icon-box" class="w-9 h-9 rounded-xl flex items-center justify-center text-base font-bold">
           <i class="ph-bold ph-shield-check" id="makruh-icon"></i>
         </div>
         <div>
-          <div class="flex items-center gap-1.5">
-            <span id="makruh-badge" class="text-[9px] uppercase font-black px-1.5 py-0.5 rounded">કઝા પઢવાનો વક્ત</span>
-          </div>
+          <span id="makruh-badge" class="text-[9px] uppercase font-black px-1.5 py-0.5 rounded leading-none">કઝા પઢવાનો વક્ત</span>
           <h4 id="makruh-title" class="text-xs font-bold text-white mt-0.5">હવે કઝા નમાઝ પઢી શકાય છે</h4>
         </div>
       </div>
-      <button onclick="openModal('makruh-modal')" class="text-[11px] text-slate-400 hover:text-white underline font-medium">
-        વિગત ▾
+      <button onclick="openModal('makruh-modal')" class="text-[11px] text-amber-300/90 hover:text-amber-200 underline font-medium">
+        વક્ત લિસ્ટ ▾
       </button>
     </div>
 
@@ -265,7 +243,79 @@
 
   </main>
 
-  <!-- ================= MAKRUH WAQT INFO MODAL ================= -->
+  <!-- ================= ALL-IN-ONE BOTTOM MENU MODAL ================= -->
+  <div id="menu-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
+    <div class="bg-[#081512] border-t sm:border border-emerald-500/30 rounded-t-3xl sm:rounded-3xl w-full max-w-md p-5 space-y-4 shadow-2xl animate-slide-up">
+      <div class="flex items-center justify-between pb-2.5 border-b border-emerald-500/15">
+        <h3 class="font-black text-sm text-white uppercase tracking-wider font-['Cinzel',serif] flex items-center gap-2">
+          <i class="ph-bold ph-squares-four text-amber-400"></i> મેનૂ અને સેટિંગ્સ
+        </h3>
+        <button onclick="closeModal('menu-modal')" class="text-slate-400 hover:text-white p-1">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Menu Grid Items -->
+      <div class="grid grid-cols-2 gap-2.5 text-xs font-bold">
+        <!-- Item 1: Guide -->
+        <button onclick="closeModal('menu-modal'); openModal('guide-modal');" class="p-3.5 rounded-2xl bg-[#050c0b] border border-amber-400/25 hover:border-amber-400/50 flex flex-col items-start gap-2 text-left active:scale-95 transition-all">
+          <div class="w-8 h-8 rounded-xl bg-amber-400/15 text-amber-300 flex items-center justify-center text-base">
+            <i class="ph-bold ph-lightning"></i>
+          </div>
+          <div>
+            <span class="text-white block">ઝડપી રીત</span>
+            <span class="text-[10px] text-slate-400 font-normal">મુખ્તસર કઝા ગાઇડ</span>
+          </div>
+        </button>
+
+        <!-- Item 2: Makruh Times -->
+        <button onclick="closeModal('menu-modal'); openModal('makruh-modal');" class="p-3.5 rounded-2xl bg-[#050c0b] border border-rose-500/25 hover:border-rose-500/50 flex flex-col items-start gap-2 text-left active:scale-95 transition-all">
+          <div class="w-8 h-8 rounded-xl bg-rose-500/15 text-rose-300 flex items-center justify-center text-base">
+            <i class="ph-bold ph-prohibit"></i>
+          </div>
+          <div>
+            <span class="text-white block">મકરુહ વક્ત</span>
+            <span class="text-[10px] text-slate-400 font-normal">મનાઈ કરેલા ૩ સમય</span>
+          </div>
+        </button>
+
+        <!-- Item 3: Qaza Calculation -->
+        <button onclick="closeModal('menu-modal'); openModal('setup-modal');" class="p-3.5 rounded-2xl bg-[#050c0b] border border-emerald-500/25 hover:border-emerald-500/50 flex flex-col items-start gap-2 text-left active:scale-95 transition-all">
+          <div class="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-300 flex items-center justify-center text-base">
+            <i class="ph-bold ph-calculator"></i>
+          </div>
+          <div>
+            <span class="text-white block">કઝા ગણતરી</span>
+            <span class="text-[10px] text-slate-400 font-normal">વર્ષ / દિવસ સેટઅપ</span>
+          </div>
+        </button>
+
+        <!-- Item 4: Sound Toggle -->
+        <button onclick="toggleSound()" class="p-3.5 rounded-2xl bg-[#050c0b] border border-teal-500/25 hover:border-teal-500/50 flex flex-col items-start gap-2 text-left active:scale-95 transition-all">
+          <div class="w-8 h-8 rounded-xl bg-teal-500/15 text-teal-300 flex items-center justify-center text-base">
+            <i class="ph-bold ph-speaker-high" id="sound-icon-menu"></i>
+          </div>
+          <div>
+            <span class="text-white block">સાઉન્ડ / અવાજ</span>
+            <span id="sound-status-menu" class="text-[10px] text-emerald-400 font-normal">ચાલુ છે</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Backup Buttons -->
+      <div class="pt-2 border-t border-emerald-500/15 flex items-center justify-between text-xs text-slate-400 px-1">
+        <button onclick="exportData()" class="flex items-center gap-1.5 hover:text-amber-400 transition-colors">
+          <i class="ph-bold ph-download-simple"></i> બેકઅપ ડાઉનલોડ
+        </button>
+        <label class="flex items-center gap-1.5 hover:text-emerald-400 cursor-pointer transition-colors">
+          <i class="ph-bold ph-upload-simple"></i> ડેટા રિસ્ટોર
+          <input type="file" accept=".json" class="hidden" onchange="importData(event)" />
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Makruh Time Info Modal -->
   <div id="makruh-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
     <div class="bg-[#081512] border-t sm:border border-rose-500/30 rounded-t-3xl sm:rounded-3xl w-full max-w-md p-6 space-y-4 shadow-2xl max-h-[85vh] overflow-y-auto animate-slide-up">
       <div class="flex items-center justify-between pb-3 border-b border-rose-500/20">
@@ -284,7 +334,6 @@
       </div>
 
       <div class="space-y-3 text-xs leading-relaxed text-slate-300">
-        <!-- Makruh 1 -->
         <div class="p-3 rounded-xl bg-[#050c0b] border border-rose-500/20 space-y-1">
           <div class="flex items-center justify-between">
             <h4 class="font-bold text-rose-300 text-xs flex items-center gap-1.5">
@@ -297,7 +346,6 @@
           </p>
         </div>
 
-        <!-- Makruh 2 -->
         <div class="p-3 rounded-xl bg-[#050c0b] border border-rose-500/20 space-y-1">
           <div class="flex items-center justify-between">
             <h4 class="font-bold text-rose-300 text-xs flex items-center gap-1.5">
@@ -310,7 +358,6 @@
           </p>
         </div>
 
-        <!-- Makruh 3 -->
         <div class="p-3 rounded-xl bg-[#050c0b] border border-rose-500/20 space-y-1">
           <div class="flex items-center justify-between">
             <h4 class="font-bold text-rose-300 text-xs flex items-center gap-1.5">
@@ -444,16 +491,6 @@
         <button onclick="closeModal('setup-modal')" class="px-5 py-3 rounded-xl bg-emerald-950/60 text-slate-300 font-bold text-xs hover:bg-emerald-900/50 transition-all border border-emerald-500/20">
           રદ
         </button>
-      </div>
-
-      <div class="pt-4 border-t border-emerald-500/20 flex items-center justify-between text-xs text-slate-400">
-        <button onclick="exportData()" class="flex items-center gap-1 hover:text-amber-400">
-          <i class="ph-bold ph-download-simple"></i> બેકઅપ ફાઈલ
-        </button>
-        <label class="flex items-center gap-1 hover:text-emerald-400 cursor-pointer">
-          <i class="ph-bold ph-upload-simple"></i> રિસ્ટોર કરો
-          <input type="file" accept=".json" class="hidden" onchange="importData(event)" />
-        </label>
       </div>
     </div>
   </div>

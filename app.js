@@ -7,7 +7,6 @@ const PRAYERS = [
   { id: 'witr', name: 'વિત્ર', ar: 'الوتر', rakat: '૩ વાજિબ', time24: '20:45', time: '08:45 PM', gradient: 'from-emerald-500/15 via-emerald-950/30 to-transparent' }
 ];
 
-// 3 Makruh Time Windows (24-Hour minute benchmarks)
 const MAKRUH_WINDOWS = [
   { name: 'તુલૂ-એ-આફતાબ (સૂર્યોદય)', start: '06:20', end: '06:40', note: 'સૂર્યોદયના ૨૦ મિનિટ સુધી' },
   { name: 'ઝવાલ-એ-આફતાબ (દોપહર)', start: '12:30', end: '12:45', note: 'ઝોહર શરૂ થતાં પહેલાં' },
@@ -99,6 +98,7 @@ function init() {
 
   updateLiveClockAndNextPrayer();
   checkMakruhWaqt();
+  updateSoundUI();
   renderApp();
 
   setTimeout(() => {
@@ -109,7 +109,6 @@ function init() {
   }, 1400);
 }
 
-// Live Makruh Time Detector
 function checkMakruhWaqt() {
   const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
@@ -131,17 +130,17 @@ function checkMakruhWaqt() {
   const title = document.getElementById('makruh-title');
 
   if (activeMakruh) {
-    card.className = 'rounded-2xl p-3.5 border transition-all flex items-center justify-between shadow-lg makruh-active animate-pulse';
-    iconBox.className = 'w-10 h-10 rounded-xl bg-rose-500/30 text-rose-300 flex items-center justify-center text-lg font-bold';
+    card.className = 'rounded-2xl p-3 border transition-all flex items-center justify-between shadow-lg makruh-active animate-pulse';
+    iconBox.className = 'w-9 h-9 rounded-xl bg-rose-500/30 text-rose-300 flex items-center justify-center text-base font-bold';
     icon.className = 'ph-bold ph-prohibit';
-    badge.className = 'text-[9px] uppercase font-black px-1.5 py-0.5 rounded bg-rose-500/30 text-rose-300 border border-rose-500/40';
+    badge.className = 'text-[9px] uppercase font-black px-1.5 py-0.5 rounded bg-rose-500/30 text-rose-300 border border-rose-500/40 leading-none';
     badge.innerText = 'મકરુહ વક્ત ચાલુ છે';
     title.innerText = `હાલ ${activeMakruh.name} છે, કઝા ન પઢવી!`;
   } else {
-    card.className = 'rounded-2xl p-3.5 border transition-all flex items-center justify-between shadow-lg makruh-inactive';
-    iconBox.className = 'w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-lg font-bold';
+    card.className = 'rounded-2xl p-3 border transition-all flex items-center justify-between shadow-lg makruh-inactive';
+    iconBox.className = 'w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-base font-bold';
     icon.className = 'ph-bold ph-shield-check';
-    badge.className = 'text-[9px] uppercase font-black px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+    badge.className = 'text-[9px] uppercase font-black px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 leading-none';
     badge.innerText = 'કઝા પઢવાનો યોગ્ય વક્ત';
     title.innerText = 'હવે કઝા નમાઝ પઢી શકાય છે';
   }
@@ -521,8 +520,18 @@ function renderApp() {
 
 function toggleSound() {
   state.sound = !state.sound;
-  document.getElementById('sound-icon').className = state.sound ? 'ph-bold ph-speaker-high text-base text-amber-400' : 'ph-bold ph-speaker-simple-slash text-base text-slate-500';
+  updateSoundUI();
   saveState();
+}
+
+function updateSoundUI() {
+  const icon = document.getElementById('sound-icon-menu');
+  const txt = document.getElementById('sound-status-menu');
+  if (icon && txt) {
+    icon.className = state.sound ? 'ph-bold ph-speaker-high' : 'ph-bold ph-speaker-simple-slash text-slate-500';
+    txt.innerText = state.sound ? 'ચાલુ છે' : 'બંધ છે';
+    txt.className = state.sound ? 'text-[10px] text-emerald-400 font-normal' : 'text-[10px] text-slate-500 font-normal';
+  }
 }
 
 function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
@@ -567,7 +576,7 @@ function importData(e) {
         state = data;
         saveState();
         alert('ડેટા સફળતાપૂર્વક લોડ થઈ ગયો!');
-        closeModal('setup-modal');
+        closeModal('menu-modal');
       }
     } catch (err) {
       alert('અમાન્ય ફાઈલ.');
