@@ -3,494 +3,349 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Qaza Pro | શાહી નમાઝ અને કઝા ટ્રેકર</title>
+  <title>Qaza Pro | નમાઝ અને કઝા ટ્રેકર</title>
 
-  <!-- PWA & Native App Meta Tags -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="QazaPro">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#040807">
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2917/2917995.png">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Gujarati:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="stylesheet" href="style.css" />
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js', { scope: './' })
-          .then((reg) => console.log('Offline Ready!', reg))
-          .catch((err) => console.error('SW Error:', err));
+          .then(() => console.log('Offline Ready'))
+          .catch((e) => console.log('SW Error', e));
       });
     }
   </script>
 </head>
-<body class="bg-[#040807] text-slate-100 min-h-screen pb-28 antialiased selection:bg-amber-400 selection:text-black">
+<body class="theme-body">
 
-  <!-- Splash Screen Intro -->
-  <div id="splash-screen" class="fixed inset-0 z-50 bg-[#040807] flex flex-col items-center justify-center pointer-events-auto">
-    <div class="absolute w-72 h-72 bg-emerald-500/20 rounded-full blur-[110px] animate-pulse"></div>
-    <div class="absolute w-60 h-60 bg-amber-400/15 rounded-full blur-[90px] animate-pulse"></div>
-
-    <div class="relative z-10 flex flex-col items-center text-center">
-      <div class="w-20 h-20 rounded-3xl bg-gradient-to-tr from-amber-400 via-emerald-500 to-teal-700 p-[2px] shadow-2xl shadow-emerald-950/80 mb-4 logo-emblem">
-        <div class="w-full h-full bg-[#081311] rounded-[22px] flex items-center justify-center text-amber-300">
-          <i class="ph-fill ph-mosque text-4xl"></i>
-        </div>
+  <!-- Splash Screen -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-center">
+      <div class="splash-icon">
+        <svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 3c-4 4-6 7-6 10a6 6 0 0 0 12 0c0-3-2-6-6-10z"/>
+          <path d="M12 10v4m-2-2h4"/>
+        </svg>
       </div>
-      <h1 class="text-2xl font-black tracking-widest text-white uppercase font-['Cinzel',serif] splash-title">
-        QAZA<span class="text-amber-400">PRO</span>
-      </h1>
-      <p class="text-xs text-emerald-400/80 font-medium tracking-wider mt-1 splash-subtitle font-mono">
-        بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
-      </p>
-      <div class="w-28 h-1 bg-slate-900 rounded-full overflow-hidden mt-6 border border-emerald-500/20">
-        <div class="h-full bg-gradient-to-r from-amber-400 to-emerald-400 splash-bar rounded-full"></div>
+      <h1 class="splash-title">QAZA<span>PRO</span></h1>
+      <p class="splash-sub">بِسْمِ اللهِ الرَّحْمٰનِ الرَّحِيْمِ</p>
+      <div class="loading-track">
+        <div class="loading-bar"></div>
       </div>
     </div>
   </div>
 
-  <!-- Ambient Glow Orbs -->
-  <div class="fixed top-[-15%] left-[-10%] w-[380px] h-[380px] bg-emerald-600/15 rounded-full blur-[140px] pointer-events-none animate-pulse-slow"></div>
-  <div class="fixed top-[30%] right-[-15%] w-[320px] h-[320px] bg-amber-500/10 rounded-full blur-[130px] pointer-events-none animate-pulse-slow"></div>
-
-  <!-- ================= CLEAN MINIMAL HEADER ================= -->
-  <header class="sticky top-0 z-40 bg-[#040807]/90 backdrop-blur-2xl border-b border-emerald-500/15">
-    <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 via-emerald-500 to-teal-700 p-[1.5px] shadow-lg shadow-emerald-950/60">
-          <div class="w-full h-full bg-[#081311] rounded-[14px] flex items-center justify-center text-amber-300">
-            <i class="ph-fill ph-mosque text-xl"></i>
-          </div>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-wrap">
+        <div class="brand-badge">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-6a3 3 0 0 1 6 0v6"/>
+          </svg>
         </div>
         <div>
-          <h1 class="text-base font-black tracking-wider text-white uppercase font-['Cinzel',serif] leading-tight">QAZA<span class="text-amber-400">PRO</span></h1>
-          <p id="clock-live" class="text-[11px] text-emerald-400 font-mono font-bold tracking-wider">12:00:00 AM</p>
+          <h1 class="brand-title">QAZA<span>PRO</span></h1>
+          <p id="clock-live" class="brand-clock">12:00:00 AM</p>
         </div>
       </div>
 
-      <!-- Single All-in-One Menu Button -->
-      <button onclick="openModal('menu-modal')" class="w-10 h-10 rounded-2xl bg-emerald-950/40 border border-emerald-500/20 text-amber-300 flex items-center justify-center active:scale-90 transition-all shadow-md shadow-emerald-950/40" title="મેનૂ અને સેટિંગ્સ">
-        <i class="ph-bold ph-dots-three-vertical text-xl"></i>
-      </button>
+      <div class="header-actions">
+        <button onclick="openModal('menu-modal')" class="icon-btn" title="મેનૂ">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <!-- Segmented Tab Navigation -->
-    <div class="max-w-md mx-auto px-4 pb-2.5 pt-1">
-      <div class="grid grid-cols-2 p-1 bg-[#091714] rounded-2xl border border-emerald-500/20 text-xs font-bold shadow-inner">
-        <button onclick="switchTab('daily')" id="tab-daily" class="py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-950/60 font-extrabold">
-          <i class="ph-bold ph-sun-horizon text-sm text-amber-300"></i> દૈનિક હિસાબ
+    <!-- Segmented Tabs (Now 3 Tabs Side-by-Side) -->
+    <div class="tabs-container">
+      <div class="tabs-slider three-tabs">
+        <button onclick="switchTab('daily')" id="tab-daily" class="tab-btn active">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          દૈનિક હિસાબ
         </button>
-        <button onclick="switchTab('qaza')" id="tab-qaza" class="py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white">
-          <i class="ph-bold ph-hourglass-high text-sm"></i> કઝા કાઉન્ટર (<span id="tab-badge-count" class="text-amber-300">0</span>)
+        <button onclick="switchTab('qaza')" id="tab-qaza" class="tab-btn">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 22h14M5 2h14m-2 20v-5l-5-5-5 5v5m0-20v5l5 5 5-5V2"/></svg>
+          કુલ કઝા (<span id="tab-badge-count">0</span>)
+        </button>
+        <button onclick="switchTab('missed')" id="tab-missed" class="tab-btn">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          છૂટેલી કઝા
         </button>
       </div>
     </div>
   </header>
 
   <!-- Main Container -->
-  <main class="max-w-md mx-auto px-4 py-3 space-y-4">
+  <main class="app-main">
 
-    <!-- Live Makruh Waqt Banner -->
-    <div id="makruh-status-card" class="rounded-2xl p-3 border transition-all flex items-center justify-between shadow-lg">
-      <div class="flex items-center gap-2.5">
-        <div id="makruh-icon-box" class="w-9 h-9 rounded-xl flex items-center justify-center text-base font-bold">
-          <i class="ph-bold ph-shield-check" id="makruh-icon"></i>
+    <!-- Makruh Indicator Card -->
+    <div id="makruh-card" class="makruh-card normal">
+      <div class="makruh-info">
+        <div class="makruh-icon" id="makruh-icon-box">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <div>
-          <span id="makruh-badge" class="text-[9px] uppercase font-black px-1.5 py-0.5 rounded leading-none">કઝા પઢવાનો વક્ત</span>
-          <h4 id="makruh-title" class="text-xs font-bold text-white mt-0.5">હવે કઝા નમાઝ પઢી શકાય છે</h4>
+          <span id="makruh-badge" class="badge-tag">કઝા પઢવાનો વક્ત</span>
+          <h4 id="makruh-title" class="status-title">હવે કઝા નમાઝ પઢી શકાય છે</h4>
         </div>
       </div>
-      <button onclick="openModal('makruh-modal')" class="text-[11px] text-amber-300/90 hover:text-amber-200 underline font-medium">
-        વક્ત લિસ્ટ ▾
-      </button>
+      <button onclick="openModal('makruh-modal')" class="link-label">વક્ત લિસ્ટ ▾</button>
     </div>
 
-    <!-- ================= DAILY VIEW ================= -->
-    <section id="view-daily" class="space-y-4 animate-fade-in">
+    <!-- ================= VIEW 1: DAILY VIEW ================= -->
+    <section id="view-daily" class="view-panel active">
 
-      <!-- Next Prayer Hero Widget -->
-      <div class="royal-card glow-emerald rounded-3xl p-5 relative overflow-hidden border border-emerald-500/30">
-        <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl pointer-events-none"></div>
-
-        <div class="flex items-start justify-between relative z-10">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-              <span class="text-[10px] uppercase font-extrabold tracking-widest text-amber-300">આગામી નમાઝ સમય</span>
-            </div>
-            <h2 id="next-prayer-name" class="text-2xl font-black text-white tracking-tight">ગણતરી ચાલુ...</h2>
-            <div class="flex items-center gap-2 mt-1">
-              <span id="next-prayer-time-badge" class="px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[11px] font-mono font-bold">-</span>
-              <span id="next-prayer-status" class="text-[11px] text-slate-400">વક્ત બાકી</span>
+      <!-- Next Prayer Solar Card -->
+      <div class="next-prayer-card">
+        <div class="np-content">
+          <div class="np-left">
+            <span class="sub-label"><span class="ping-dot"></span> આગામી નમાઝ સમય</span>
+            <h2 id="next-prayer-name" class="np-title">ગણતરી ચાલુ...</h2>
+            <div class="np-badges">
+              <span id="next-prayer-time-badge" class="badge-time">--:-- --</span>
+              <span id="next-prayer-status" class="badge-sub">સાચો વક્ત</span>
             </div>
           </div>
-
-          <div class="text-right">
-            <div class="text-xl font-mono font-black text-amber-300 tracking-wider" id="next-prayer-timer">00:00:00</div>
-            <p class="text-[10px] text-slate-400 font-medium mt-0.5">કાઉન્ટડાઉન</p>
+          <div class="np-right">
+            <div id="next-prayer-timer" class="countdown-clock">00:00:00</div>
+            <p class="cd-label">સમય બાકી</p>
           </div>
-        </div>
-
-        <div class="mt-4 pt-3 border-t border-emerald-500/15 flex items-center justify-between text-[11px]">
-          <span class="text-slate-400 flex items-center gap-1.5">
-            <i class="ph-fill ph-sparkle text-amber-400"></i> આજનો સૂર્યાસ્ત / મગરિબ:
-          </span>
-          <span class="font-bold text-slate-200 font-mono">06:50 PM</span>
         </div>
       </div>
 
-      <!-- Quick Interactive Date Picker Ribbon -->
-      <div class="royal-card rounded-2xl p-2 border border-emerald-500/20 flex items-center gap-2">
-        <button onclick="navigateDay(-1)" class="w-10 h-11 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/50 text-slate-300 flex items-center justify-center active:scale-90 transition-all flex-shrink-0 border border-emerald-500/20" title="ગઈકાલ">
-          <i class="ph-bold ph-caret-left text-base text-amber-400"></i>
+      <!-- Date Ribbon Selector with DD/MM/YYYY text -->
+      <div class="date-selector-bar">
+        <button onclick="navigateDay(-1)" class="nav-step-btn" title="ગઈકાલ">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-
-        <div class="flex-1 relative flex items-center bg-[#06110f] border border-amber-400/30 rounded-xl px-3.5 py-2 shadow-inner">
-          <i class="ph-bold ph-calendar-blank text-amber-400 text-lg mr-2.5"></i>
-          <div class="flex-1">
-            <span class="text-[9px] uppercase tracking-wider text-amber-300 font-bold block leading-none">તારીખ પસંદ કરો (Tap)</span>
-            <input type="date" id="visible-date-picker" onchange="onDateSelected(this.value)" class="bg-transparent text-white font-black text-xs w-full outline-none cursor-pointer mt-1 font-mono tracking-wide" />
+        <div class="date-input-field" onclick="triggerDatePicker()">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <div class="field-meta">
+            <span class="label-tiny">તારીખ પસંદ કરો (DD/MM/YYYY)</span>
+            <span id="visible-date-display" class="date-formatted-txt">--/--/----</span>
+            <input type="date" id="hidden-date-picker" onchange="onDateSelected(this.value)" class="date-picker-hidden" />
           </div>
         </div>
-
-        <button onclick="navigateDay(1)" class="w-10 h-11 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/50 text-slate-300 flex items-center justify-center active:scale-90 transition-all flex-shrink-0 border border-emerald-500/20" title="આવતીકાલ">
-          <i class="ph-bold ph-caret-right text-base text-amber-400"></i>
+        <button onclick="navigateDay(1)" class="nav-step-btn" title="આવતીકાલ">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
       </div>
 
-      <!-- Daily Score Card -->
-      <div class="royal-card rounded-2xl p-3.5 border border-emerald-500/20 flex items-center justify-between">
+      <!-- Daily Score Dashboard -->
+      <div class="daily-score-card">
         <div>
-          <span id="selected-date-title" class="text-[10px] font-bold tracking-wider text-slate-400 uppercase">આજનો હિસાબ</span>
-          <h3 id="daily-status-title" class="text-base font-extrabold text-white mt-0.5">૦/૬ અદા થઈ</h3>
+          <span id="selected-date-title" class="sub-label">આજનો હિસાબ</span>
+          <h3 id="daily-status-title" class="score-title">૦/૬ અદા થઈ</h3>
         </div>
-        <div class="flex items-center gap-2.5">
-          <button onclick="markAllTodayOffered()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md shadow-amber-950/50 active:scale-95 transition-all">
-            બધી અદા થઈ
-          </button>
-          <div class="w-10 h-10 rounded-xl bg-[#06110f] border border-emerald-500/30 text-amber-300 flex items-center justify-center text-xs font-black" id="daily-ratio-badge">
-            0%
-          </div>
+        <div class="score-right">
+          <button onclick="markAllTodayOffered()" class="btn-primary-compact">બધી અદા થઈ</button>
+          <div class="score-circle" id="daily-ratio-badge">0%</div>
         </div>
       </div>
 
-      <!-- Prayer Cards Container -->
-      <div class="space-y-3" id="daily-prayers-list"></div>
+      <!-- Daily Prayers List -->
+      <div class="prayers-stack" id="daily-prayers-list"></div>
     </section>
 
-    <!-- ================= QAZA COUNTER VIEW ================= -->
-    <section id="view-qaza" class="space-y-4 hidden animate-fade-in">
-
-      <!-- Royal Qaza Ring Hero -->
-      <div class="royal-card glow-gold rounded-3xl p-5 border border-amber-400/25 relative overflow-hidden">
-        <div class="flex items-center justify-between">
-          <div class="space-y-1">
-            <span class="text-[10px] font-bold text-amber-300 uppercase tracking-widest flex items-center gap-1.5">
-              <i class="ph-fill ph-shield-check text-amber-400"></i> કુલ બાકી કઝા નમાઝ
-            </span>
-            <h2 id="total-qaza-count" class="text-3xl font-black text-white tracking-tight">0</h2>
-            <p id="total-days-left" class="text-xs text-slate-400 font-medium">~ 0 દિવસની કઝા બાકી</p>
-          </div>
-
-          <div class="relative w-18 h-18 flex items-center justify-center">
-            <svg class="w-16 h-16 transform -rotate-90">
-              <circle cx="32" cy="32" r="26" stroke="currentColor" stroke-width="5" class="text-emerald-950/80" fill="transparent" />
-              <circle id="qaza-ring-progress" cx="32" cy="32" r="26" stroke="currentColor" stroke-width="5" class="text-amber-400 transition-all duration-700 ease-out" fill="transparent" stroke-dasharray="163.36" stroke-dashoffset="163.36" stroke-linecap="round" />
-            </svg>
-            <span id="qaza-percent-badge" class="absolute text-xs font-black text-amber-300">0%</span>
-          </div>
+    <!-- ================= VIEW 2: QAZA COUNTER ================= -->
+    <section id="view-qaza" class="view-panel">
+      <!-- Lifetime Total Counter Card -->
+      <div class="qaza-hero-card">
+        <div class="qh-left">
+          <span class="sub-label">કુલ બાકી કઝા નમાઝ</span>
+          <h2 id="total-qaza-count" class="qh-number">0</h2>
+          <p id="total-days-left" class="qh-sub">~ 0 દિવસની કઝા બાકી</p>
         </div>
-
-        <div class="mt-4 pt-3 border-t border-emerald-500/15 flex items-center justify-between text-xs text-slate-400">
-          <span class="flex items-center gap-1.5">
-            <i class="ph-bold ph-hourglass text-emerald-400"></i> પૂર્ણ થવાનો અંદાજ:
-          </span>
-          <span id="estimated-date-display" class="font-bold text-amber-300">-</span>
+        <div class="qh-progress-ring">
+          <svg class="ring-svg">
+            <circle cx="32" cy="32" r="26" class="ring-bg"/>
+            <circle id="qaza-ring-progress" cx="32" cy="32" r="26" class="ring-fill"/>
+          </svg>
+          <span id="qaza-percent-badge" class="ring-txt">0%</span>
         </div>
       </div>
 
-      <!-- Deduct Whole Day Action -->
-      <button onclick="deductWholeDay()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 hover:opacity-95 active:scale-[0.98] text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-emerald-950/60 border border-emerald-400/30 transition-all">
-        <i class="ph-bold ph-check-fat text-amber-300 text-base"></i> ૧ આખા દિવસની કઝા બાદ કરો (-1 All)
+      <div class="estimate-strip">
+        <span>પૂર્ણ થવાનો અંદાજ:</span>
+        <strong id="estimated-date-display">-</strong>
+      </div>
+
+      <button onclick="deductWholeDay()" class="btn-primary-large">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        ૧ આખા દિવસની કઝા બાદ કરો (-1 All)
       </button>
 
-      <div class="space-y-2.5" id="qaza-cards-container"></div>
+      <!-- Lifetime Prayers List -->
+      <div class="prayers-stack" id="qaza-cards-container"></div>
     </section>
 
-    <!-- Activity Log -->
-    <div class="royal-card rounded-2xl p-3.5 border border-emerald-500/20 text-xs">
-      <div class="flex items-center justify-between pb-2 border-b border-emerald-500/15 mb-2">
-        <span class="font-bold text-amber-300 uppercase tracking-wider text-[10px] flex items-center gap-1.5">
-          <i class="ph-bold ph-clock-counter-clockwise text-emerald-400"></i> તાજેતરની નોંધણી
-        </span>
-        <button onclick="undoLastAction()" class="text-amber-400 hover:underline flex items-center gap-1 font-bold active:scale-95 transition-transform">
-          <i class="ph-bold ph-arrow-u-up-left"></i> Undo
-        </button>
+    <!-- ================= VIEW 3: MISSED QAZA DAYS LIST ================= -->
+    <section id="view-missed" class="view-panel">
+      <div class="missed-panel-header">
+        <div class="mph-title-box">
+          <h3 class="mph-title">છૂટેલી કઝા દિવસોની યાદી</h3>
+          <p class="mph-sub">કયા દિવસે કઈ નમાઝ છૂટી ગઈ છે તેની હિસ્ટ્રી</p>
+        </div>
       </div>
-      <div id="activity-log-box" class="space-y-1.5 text-slate-400 max-h-20 overflow-y-auto">
-        <p class="italic text-slate-500 text-[11px]">કોઈ તાજેતરની નોંધ નથી.</p>
-      </div>
-    </div>
+
+      <div class="missed-list-content" id="missed-days-container"></div>
+    </section>
 
   </main>
 
-  <!-- ================= ALL-IN-ONE BOTTOM MENU MODAL ================= -->
-  <div id="menu-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
-    <div class="bg-[#081512] border-t sm:border border-emerald-500/30 rounded-t-3xl sm:rounded-3xl w-full max-w-md p-5 space-y-4 shadow-2xl animate-slide-up">
-      <div class="flex items-center justify-between pb-2.5 border-b border-emerald-500/15">
-        <h3 class="font-black text-sm text-white uppercase tracking-wider font-['Cinzel',serif] flex items-center gap-2">
-          <i class="ph-bold ph-squares-four text-amber-400"></i> મેનૂ અને સેટિંગ્સ
-        </h3>
-        <button onclick="closeModal('menu-modal')" class="text-slate-400 hover:text-white p-1">
-          <i class="ph-bold ph-x text-lg"></i>
-        </button>
+  <!-- ================= MENU MODAL ================= -->
+  <div id="menu-modal" class="modal-overlay hidden">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="mh-title">મેનૂ અને સેટિંગ્સ</h3>
+        <button onclick="closeModal('menu-modal')" class="close-btn">&times;</button>
       </div>
 
-      <!-- Menu Grid Items -->
-      <div class="grid grid-cols-2 gap-2.5 text-xs font-bold">
-        <!-- Item 1: Guide -->
-        <button onclick="closeModal('menu-modal'); openModal('guide-modal');" class="p-3.5 rounded-2xl bg-[#050c0b] border border-amber-400/25 hover:border-amber-400/50 flex flex-col items-start gap-2 text-left active:scale-95 transition-all">
-          <div class="w-8 h-8 rounded-xl bg-amber-400/15 text-amber-300 flex items-center justify-center text-base">
-            <i class="ph-bold ph-lightning"></i>
+      <div class="menu-grid">
+        <div onclick="closeModal('menu-modal'); openModal('guide-modal');" class="menu-item">
+          <div class="menu-icon red">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
           <div>
-            <span class="text-white block">ઝડપી રીત</span>
-            <span class="text-[10px] text-slate-400 font-normal">મુખ્તસર કઝા ગાઇડ</span>
+            <h4>ઝડપી રીત</h4>
+            <p>કઝા પઢવાની સરળ ગાઇડ</p>
           </div>
-        </button>
+        </div>
 
-        <!-- Item 2: Makruh Times -->
-        <button onclick="closeModal('menu-modal'); openModal('makruh-modal');" class="p-3.5 rounded-2xl bg-[#050c0b] border border-rose-500/25 hover:border-rose-500/50 flex flex-col items-start gap-2 text-left active:scale-95 transition-all">
-          <div class="w-8 h-8 rounded-xl bg-rose-500/15 text-rose-300 flex items-center justify-center text-base">
-            <i class="ph-bold ph-prohibit"></i>
+        <div onclick="closeModal('menu-modal'); openModal('makruh-modal');" class="menu-item">
+          <div class="menu-icon red-light">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
           </div>
           <div>
-            <span class="text-white block">મકરુહ વક્ત</span>
-            <span class="text-[10px] text-slate-400 font-normal">મનાઈ કરેલા ૩ સમય</span>
+            <h4>મકરુહ વક્ત</h4>
+            <p>મનાઈ કરેલા ૩ સમય</p>
           </div>
-        </button>
+        </div>
 
-        <!-- Item 3: Qaza Calculation -->
-        <button onclick="closeModal('menu-modal'); openModal('setup-modal');" class="p-3.5 rounded-2xl bg-[#050c0b] border border-emerald-500/25 hover:border-emerald-500/50 flex flex-col items-start gap-2 text-left active:scale-95 transition-all">
-          <div class="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-300 flex items-center justify-center text-base">
-            <i class="ph-bold ph-calculator"></i>
+        <div onclick="closeModal('menu-modal'); openModal('setup-modal');" class="menu-item">
+          <div class="menu-icon outline-red">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
           </div>
           <div>
-            <span class="text-white block">કઝા ગણતરી</span>
-            <span class="text-[10px] text-slate-400 font-normal">વર્ષ / દિવસ સેટઅપ</span>
+            <h4>કઝા સેટઅપ</h4>
+            <p>વર્ષ / દિવસ ગણતરી</p>
           </div>
-        </button>
+        </div>
 
-        <!-- Item 4: Sound Toggle -->
-        <button onclick="toggleSound()" class="p-3.5 rounded-2xl bg-[#050c0b] border border-teal-500/25 hover:border-teal-500/50 flex flex-col items-start gap-2 text-left active:scale-95 transition-all">
-          <div class="w-8 h-8 rounded-xl bg-teal-500/15 text-teal-300 flex items-center justify-center text-base">
-            <i class="ph-bold ph-speaker-high" id="sound-icon-menu"></i>
+        <div onclick="toggleSound()" class="menu-item">
+          <div class="menu-icon soft-red">
+            <svg id="menu-sound-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
           </div>
           <div>
-            <span class="text-white block">સાઉન્ડ / અવાજ</span>
-            <span id="sound-status-menu" class="text-[10px] text-emerald-400 font-normal">ચાલુ છે</span>
+            <h4>સાઉન્ડ</h4>
+            <p id="menu-sound-status">ચાલુ છે</p>
           </div>
-        </button>
+        </div>
       </div>
 
-      <!-- Backup Buttons -->
-      <div class="pt-2 border-t border-emerald-500/15 flex items-center justify-between text-xs text-slate-400 px-1">
-        <button onclick="exportData()" class="flex items-center gap-1.5 hover:text-amber-400 transition-colors">
-          <i class="ph-bold ph-download-simple"></i> બેકઅપ ડાઉનલોડ
+      <div class="backup-actions">
+        <button onclick="exportData()" class="text-action-btn">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          બેકઅપ લો
         </button>
-        <label class="flex items-center gap-1.5 hover:text-emerald-400 cursor-pointer transition-colors">
-          <i class="ph-bold ph-upload-simple"></i> ડેટા રિસ્ટોર
-          <input type="file" accept=".json" class="hidden" onchange="importData(event)" />
+        <label class="text-action-btn">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          રિસ્ટોર કરો
+          <input type="file" accept=".json" class="file-hidden" onchange="importData(event)" />
         </label>
       </div>
     </div>
   </div>
 
-  <!-- Makruh Time Info Modal -->
-  <div id="makruh-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
-    <div class="bg-[#081512] border-t sm:border border-rose-500/30 rounded-t-3xl sm:rounded-3xl w-full max-w-md p-6 space-y-4 shadow-2xl max-h-[85vh] overflow-y-auto animate-slide-up">
-      <div class="flex items-center justify-between pb-3 border-b border-rose-500/20">
-        <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-400 flex items-center justify-center font-bold">
-            <i class="ph-bold ph-prohibit text-lg"></i>
-          </div>
-          <div>
-            <h3 class="font-black text-base text-white font-['Cinzel',serif]">મકરુહ વક્ત (નમાઝની મનાઈ)</h3>
-            <p class="text-[10px] text-rose-400">આ ૩ સમયે કોઈ પણ કઝા કે નફલ નમાઝ ન પઢવી</p>
-          </div>
-        </div>
-        <button onclick="closeModal('makruh-modal')" class="text-slate-400 hover:text-white p-1">
-          <i class="ph-bold ph-x text-lg"></i>
-        </button>
-      </div>
-
-      <div class="space-y-3 text-xs leading-relaxed text-slate-300">
-        <div class="p-3 rounded-xl bg-[#050c0b] border border-rose-500/20 space-y-1">
-          <div class="flex items-center justify-between">
-            <h4 class="font-bold text-rose-300 text-xs flex items-center gap-1.5">
-              <i class="ph-fill ph-sun text-amber-400"></i> ૧. તુલૂ-એ-આફતાબ (સૂર્યોદય)
-            </h4>
-            <span class="text-[10px] font-mono text-slate-400">06:20 AM - 06:40 AM</span>
-          </div>
-          <p class="text-[11px] text-slate-400">
-            સૂરજ ઊગ્યા પછી ૨૦ મિનિટ સુધી કોઈ પણ નમાઝ કે સજદો કરવો મનાઈ છે.
-          </p>
-        </div>
-
-        <div class="p-3 rounded-xl bg-[#050c0b] border border-rose-500/20 space-y-1">
-          <div class="flex items-center justify-between">
-            <h4 class="font-bold text-rose-300 text-xs flex items-center gap-1.5">
-              <i class="ph-fill ph-sun-dim text-amber-400"></i> ૨. ઝવાલ-એ-આફતાબ (નિસ્ફુન્નહાર)
-            </h4>
-            <span class="text-[10px] font-mono text-slate-400">12:30 PM - 12:45 PM</span>
-          </div>
-          <p class="text-[11px] text-slate-400">
-            બપોરે સૂરજ બરાબર માથા ઉપર હોય તે સમય. ઝોહરનો વક્ત શરૂ થવાની ૧૫ મિનિટ પહેલાં નમાઝ મકરુહ છે.
-          </p>
-        </div>
-
-        <div class="p-3 rounded-xl bg-[#050c0b] border border-rose-500/20 space-y-1">
-          <div class="flex items-center justify-between">
-            <h4 class="font-bold text-rose-300 text-xs flex items-center gap-1.5">
-              <i class="ph-fill ph-sunset text-amber-400"></i> ૩. ગુરૂબ-એ-આફતાબ (સૂર્યાસ્ત)
-            </h4>
-            <span class="text-[10px] font-mono text-slate-400">06:30 PM - 06:50 PM</span>
-          </div>
-          <p class="text-[11px] text-slate-400">
-            સૂરજ ડૂબવાની ૨૦ મિનિટ પહેલાંથી મગરિબની અઝાન સુધી કોઈ કઝા નમાઝ પઢવી મકરુહ-એ-તહરીમી છે.
-          </p>
-        </div>
-
-        <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/20 text-[11px] text-emerald-300">
-          <strong class="text-amber-300">નિયમ:</strong> આ ૩ સમય સિવાય દિવસ કે રાતના કોઈપણ સમયે (ફજર પછી કે અસર પછી પણ) કઝા નમાઝ પઢી શકાય છે.
-        </div>
-      </div>
-
-      <button onclick="closeModal('makruh-modal')" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black text-xs uppercase tracking-wider active:scale-95 transition-all">
-        સમજાઈ ગયું (Close)
-      </button>
-    </div>
-  </div>
-
   <!-- Guide Modal -->
-  <div id="guide-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
-    <div class="bg-[#081512] border-t sm:border border-amber-400/30 rounded-t-3xl sm:rounded-3xl w-full max-w-md p-6 space-y-4 shadow-2xl max-h-[85vh] overflow-y-auto animate-slide-up">
-      <div class="flex items-center justify-between pb-3 border-b border-emerald-500/20">
-        <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-400 flex items-center justify-center font-bold">
-            <i class="ph-bold ph-lightning text-lg"></i>
-          </div>
-          <div>
-            <h3 class="font-black text-base text-white font-['Cinzel',serif]">કઝા પઢવાની ઝડપી રીત</h3>
-            <p class="text-[10px] text-emerald-400">શરઈ મુખ્તસર પદ્ધતિ (Easy & Valid)</p>
-          </div>
-        </div>
-        <button onclick="closeModal('guide-modal')" class="text-slate-400 hover:text-white p-1">
-          <i class="ph-bold ph-x text-lg"></i>
-        </button>
+  <div id="guide-modal" class="modal-overlay hidden">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="mh-title">કઝા પઢવાની ઝડપી રીત</h3>
+        <button onclick="closeModal('guide-modal')" class="close-btn">&times;</button>
       </div>
-
-      <div class="space-y-3 text-xs leading-relaxed text-slate-300">
-        <div class="p-3 rounded-xl bg-[#050c0b] border border-emerald-500/20 space-y-1">
-          <h4 class="font-bold text-amber-300 text-xs flex items-center gap-1.5">
-            <i class="ph-fill ph-check-circle text-emerald-400"></i> ૧. નિયત કેવી રીતે કરવી?
-          </h4>
-          <p class="text-[11px] text-slate-400">
-            મનમાં માત્ર આટલો સંકલ્પ પૂરતો છે: <em>"મારા ઝિમ્મે બાકી રહેલી સૌથી પહેલી ફજર (કે ઝોહર/અસર...) ની કઝા નમાઝ પઢું છું."</em>
-          </p>
+      <div class="modal-scroll-text">
+        <div class="info-card">
+          <h4>૧. નિયત</h4>
+          <p>મનમાં સંકલ્પ કરો: <em>"મારા પર બાકી રહેલી સૌથી પહેલી ફજર (કે ઝોહર/અસર...) ની કઝા નમાઝ પઢું છું."</em></p>
         </div>
-        <div class="p-3 rounded-xl bg-[#050c0b] border border-emerald-500/20 space-y-1">
-          <h4 class="font-bold text-amber-300 text-xs flex items-center gap-1.5">
-            <i class="ph-fill ph-check-circle text-emerald-400"></i> ૨. રુકૂ અને સિજદામાં છૂટ
-          </h4>
-          <p class="text-[11px] text-slate-400">
-            રુકૂમાં <strong>'સુબ્હાન રબ્બિયલ અઝીમ'</strong> અને સિજદામાં <strong>'સુબ્હાન રબ્બિયલ આલા'</strong> ૩ વારના બદલે માત્ર ૧-૧ વાર કહી શકાય છે.
-          </p>
+        <div class="info-card">
+          <h4>૨. રુકૂ અને સિજદા</h4>
+          <p>રુકૂ અને સિજદાની તસ્બીહ ૩ ના બદલે ૧-૧ વાર કહી શકાય છે.</p>
         </div>
-        <div class="p-3 rounded-xl bg-[#050c0b] border border-emerald-500/20 space-y-1">
-          <h4 class="font-bold text-amber-300 text-xs flex items-center gap-1.5">
-            <i class="ph-fill ph-check-circle text-emerald-400"></i> ૩. છેલ્લી ૨ રકાતમાં છૂટ
-          </h4>
-          <p class="text-[11px] text-slate-400">
-            ઝોહર, અસર અને ઈશાની ત્રીજી અને ચોથી રકાતમાં સૂરા ફાતિહા પઢવાના બદલે માત્ર ૩ વાર <strong>'સુબ્હાનલ્લાહ'</strong> કહીને રુકૂ કરી શકાય છે.
-          </p>
+        <div class="info-card">
+          <h4>૩. છેલ્લી ૨ રકાતમાં</h4>
+          <p>ઝોહર, અસર અને ઈશાની ત્રીજી-ચોથી રકાતમાં સૂરા ફાતિહાના બદલે ૩ વાર <strong>'સુબ્હાનલ્લાહ'</strong> કહી શકાય.</p>
         </div>
-        <div class="p-3 rounded-xl bg-[#050c0b] border border-emerald-500/20 space-y-1">
-          <h4 class="font-bold text-amber-300 text-xs flex items-center gap-1.5">
-            <i class="ph-fill ph-check-circle text-emerald-400"></i> ૪. વિત્ર નમાઝમાં દુઆ-એ-કુનૂત
-          </h4>
-          <p class="text-[11px] text-slate-400">
-            જો આખી દુઆ યાદ ન હોય, તો ૩ વાર <strong>'અલ્લાહુમ્મગ્ફિર લી'</strong> અથવા ૧ વાર <strong>'રબ્બના આતિના...'</strong> પઢી શકાય.
-          </p>
-        </div>
-        <div class="p-3 rounded-xl bg-[#050c0b] border border-emerald-500/20 space-y-1">
-          <h4 class="font-bold text-amber-300 text-xs flex items-center gap-1.5">
-            <i class="ph-fill ph-check-circle text-emerald-400"></i> ૫. તશહ્હુદ (અત્તહિય્યાત) પછી
-          </h4>
-          <p class="text-[11px] text-slate-400">
-            અત્તહિય્યાત પૂરી કર્યા પછી માત્ર <strong>'અલ્લાહુમ્મ સલ્લિ અલા મુહમ્મદિવં વ આલિહી'</strong> પઢીને તરત સલામ ફેરી શકાય છે.
-          </p>
+        <div class="info-card">
+          <h4>૪. વિત્ર દુઆ-એ-કુનૂત</h4>
+          <p>દુઆ-એ-કુનૂતની જગ્યાએ ૩ વાર <strong>'અલ્લાહુમ્મગ્ફિર લી'</strong> કહીને રુકૂ કરી શકાય.</p>
         </div>
       </div>
-
-      <button onclick="closeModal('guide-modal')" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider active:scale-95 transition-all shadow-lg shadow-amber-950/50">
-        સમજાઈ ગયું (Close)
-      </button>
     </div>
   </div>
 
-  <!-- Settings Modal -->
-  <div id="setup-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
-    <div class="bg-[#081512] border-t sm:border border-emerald-500/30 rounded-t-3xl sm:rounded-3xl w-full max-w-md p-6 space-y-4 shadow-2xl max-h-[85vh] overflow-y-auto animate-slide-up">
-      <div class="flex items-center justify-between pb-3 border-b border-emerald-500/20">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-amber-400/10 border border-amber-400/20 text-amber-400 flex items-center justify-center font-bold">
-            <i class="ph-bold ph-calculator text-base"></i>
-          </div>
-          <h3 class="font-black text-base text-white font-['Cinzel',serif]">કઝા સેટઅપ</h3>
-        </div>
-        <button onclick="closeModal('setup-modal')" class="text-slate-400 hover:text-white">
-          <i class="ph-bold ph-x text-lg"></i>
-        </button>
+  <!-- Makruh Modal -->
+  <div id="makruh-modal" class="modal-overlay hidden">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="mh-title">મકરુહ વક્ત (નમાઝની મનાઈ)</h3>
+        <button onclick="closeModal('makruh-modal')" class="close-btn">&times;</button>
       </div>
-
-      <div class="space-y-3 text-xs">
-        <div>
-          <label class="block font-semibold text-slate-300 mb-1">આશરે કેટલા વર્ષની કઝા છે?</label>
-          <input type="number" id="calc-years" min="0" placeholder="0" class="w-full bg-[#050c0b] border border-emerald-500/30 rounded-xl px-3.5 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition-colors" />
+      <div class="modal-scroll-text">
+        <div class="info-card danger">
+          <h4>૧. તુલૂ-એ-આફતાબ (સૂર્યોદય)</h4>
+          <p>સૂર્ય ઊગ્યા પછીની ૨૦ મિનિટ સુધી નમાઝ મનાઈ છે.</p>
         </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block font-semibold text-slate-300 mb-1">મહિના:</label>
-            <input type="number" id="calc-months" min="0" max="11" placeholder="0" class="w-full bg-[#050c0b] border border-emerald-500/30 rounded-xl px-3.5 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition-colors" />
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-300 mb-1">દિવસો:</label>
-            <input type="number" id="calc-days" min="0" max="30" placeholder="0" class="w-full bg-[#050c0b] border border-emerald-500/30 rounded-xl px-3.5 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition-colors" />
-          </div>
+        <div class="info-card danger">
+          <h4>૨. ઝવાલ-એ-આફતાબ (બપોરે)</h4>
+          <p>ઝોહરનો વક્ત શરૂ થવાની ૧૫ મિનિટ પહેલાં નમાઝ મનાઈ છે.</p>
         </div>
-        <div>
-          <label class="block font-semibold text-slate-300 mb-1">રોજ કેટલી કઝા પઢવાનું લક્ષ્ય છે? (દિવસોમાં)</label>
-          <input type="number" id="calc-pace" min="1" max="15" value="1" class="w-full bg-[#050c0b] border border-emerald-500/30 rounded-xl px-3.5 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition-colors" />
+        <div class="info-card danger">
+          <h4>૩. ગુરૂબ-એ-આફતાબ (સૂર્યાસ્ત)</h4>
+          <p>સૂર્યાસ્તની ૨૦ મિનિટ પહેલાંથી મગરિબ સુધી કઝા નમાઝ ન પઢવી.</p>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="pt-2 flex gap-2">
-        <button onclick="saveInitialCalculation()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider active:scale-95 transition-all shadow-lg shadow-amber-950/50">
-          સેવ કરો
-        </button>
-        <button onclick="closeModal('setup-modal')" class="px-5 py-3 rounded-xl bg-emerald-950/60 text-slate-300 font-bold text-xs hover:bg-emerald-900/50 transition-all border border-emerald-500/20">
-          રદ
-        </button>
+  <!-- Setup Modal -->
+  <div id="setup-modal" class="modal-overlay hidden">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="mh-title">કઝા ગણતરી સેટઅપ</h3>
+        <button onclick="closeModal('setup-modal')" class="close-btn">&times;</button>
+      </div>
+      <div class="setup-form">
+        <div class="form-group">
+          <label>કેટલા વર્ષની કઝા છે?</label>
+          <input type="number" id="calc-years" min="0" placeholder="0" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>મહિના:</label>
+            <input type="number" id="calc-months" min="0" max="11" placeholder="0" />
+          </div>
+          <div class="form-group">
+            <label>દિવસો:</label>
+            <input type="number" id="calc-days" min="0" max="30" placeholder="0" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>રોજ કેટલી કઝા પઢવાનું લક્ષ્ય છે?</label>
+          <input type="number" id="calc-pace" min="1" max="15" value="1" />
+        </div>
+        <button onclick="saveInitialCalculation()" class="btn-primary-large">સેવ કરો</button>
       </div>
     </div>
   </div>

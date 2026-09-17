@@ -1,14 +1,14 @@
 {
-  "id": "com.qazapro.app",
+  "id": "com.qazapro.cherry.light.v1",
   "name": "Qaza Pro નમાઝ ટ્રેકર",
   "short_name": "QazaPro",
-  "description": "શાહી નમાઝ અને કઝા કાઉન્ટર",
+  "description": "કઝા નમાઝ અને સાચા સોલાર વક્ત ટ્રેકર",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "display_override": ["standalone", "fullscreen"],
-  "background_color": "#040807",
-  "theme_color": "#040807",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "orientation": "portrait-primary",
   "icons": [
     {
