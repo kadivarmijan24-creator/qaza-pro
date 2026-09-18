@@ -1,15 +1,10 @@
-const CACHE_NAME = 'qaza-pro-standalone-v1';
-
-// All local and external resources required to run 100% offline
+const CACHE_NAME = 'qaza-pro-mint-v5';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './app.js',
-  './manifest.json',
-  'https://cdn.tailwindcss.com',
-  'https://unpkg.com/@phosphor-icons/web',
-  'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js'
+  './manifest.json'
 ];
 
 self.addEventListener('install', (e) => {
@@ -34,17 +29,10 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
-// Cache First Strategy - offline first
 self.addEventListener('fetch', (e) => {
   e.respondWith(
-    caches.match(e.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(e.request).catch(() => {
-        // Fallback to offline cached root page
-        return caches.match('./index.html');
-      });
+    caches.match(e.request).then((cached) => {
+      return cached || fetch(e.request).catch(() => caches.match('./index.html'));
     })
   );
 });

@@ -7,7 +7,7 @@ const PRAYER_KEYS = [
   { id: 'witr', name: 'વિત્ર', ar: 'الوتر', rakat: '૩ વાજિબ' }
 ];
 
-const STORAGE_KEY = 'qaza_pro_cherry_tabs_v2';
+const STORAGE_KEY = 'qaza_pro_mint_tabs_v3';
 
 let state = {
   initialTotal: 0,
@@ -19,20 +19,17 @@ let state = {
 
 let viewingDate = getTodayDateStr();
 
-// Internal storage in YYYY-MM-DD for native input compatibility
 function getTodayDateStr() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-// Convert YYYY-MM-DD -> DD/MM/YYYY
 function formatToDDMMYYYY(dateStr) {
   if (!dateStr) return '';
   const [y, m, d] = dateStr.split('-');
   return `${d}/${m}/${y}`;
 }
 
-// True Solar Time Calculation
 function getCalculatedTimes(dateObj = new Date()) {
   const dayOfYear = Math.floor((dateObj - new Date(dateObj.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
   const b = (2 * Math.PI * (dayOfYear - 81)) / 365;
@@ -153,7 +150,6 @@ function navigateDay(offset) {
   renderApp();
 }
 
-// 3 Tabs Switch Logic
 function switchTab(tab) {
   playBeep(450, 0.05);
   const tabs = ['daily', 'qaza', 'missed'];
@@ -304,7 +300,6 @@ function renderApp() {
   ensureDateRecord(viewingDate);
   const currentRecord = state.historyRecords[viewingDate];
 
-  // DD/MM/YYYY text formatting
   document.getElementById('hidden-date-picker').value = viewingDate;
   document.getElementById('visible-date-display').innerText = formatToDDMMYYYY(viewingDate);
 
@@ -412,7 +407,6 @@ function renderApp() {
   renderMissedLogList();
 }
 
-// Render Missed Days in DD/MM/YYYY
 function renderMissedLogList() {
   const container = document.getElementById('missed-days-container');
   if (!container) return;
