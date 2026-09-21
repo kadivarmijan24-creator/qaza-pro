@@ -1,9 +1,9 @@
-const CACHE_NAME = 'qaza-pro-mint-v5';
+const CACHE_NAME = 'qaza-pro-mint-v6';
 const ASSETS = [
   './',
   './index.html',
-  './style.css',
-  './app.js',
+  './style.css?v=6',
+  './app.js?v=6',
   './manifest.json'
 ];
 

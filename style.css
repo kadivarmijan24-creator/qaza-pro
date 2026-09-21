@@ -1,29 +1,29 @@
-/* Multi-Device Consistent Font Stack (100% Offline) */
+/* Multi-Device Identical & Offline System Font Stack */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Gujarati", "Gujarati Sangam MN", Arial, sans-serif;
 }
 
 body.theme-body {
   background-color: #f7faf9;
   background-image: linear-gradient(180deg, #ffffff 0%, #edf5f3 100%);
   color: #1e293b;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   min-height: 100vh;
-  padding-bottom: 5rem;
+  padding-bottom: 5.5rem;
   overflow-x: hidden;
   position: relative;
 }
 
-/* App Header */
+/* App Top Header */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid #e2e8f0;
@@ -46,7 +46,7 @@ body.theme-body {
   width: 42px;
   height: 42px;
   border-radius: 14px;
-  background: #53BDA5;
+  background: linear-gradient(135deg, #53BDA5 0%, #369c85 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,45 +90,69 @@ body.theme-body {
   transform: scale(0.92);
 }
 
-/* Tabs */
-.tabs-container {
+/* ================= NATIVE BOTTOM NAVIGATION BAR ================= */
+.bottom-nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 45;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-top: 1px solid #e2e8f0;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
+}
+.bottom-nav-inner {
   max-width: 480px;
   margin: 0 auto;
-  padding: 0 1rem 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.45rem 0.5rem 0.65rem 0.5rem;
 }
-.tabs-slider {
-  display: grid;
-  background: #e6f3f0;
-  padding: 3px;
-  border-radius: 14px;
-  border: 1px solid #d1eae4;
-}
-.tabs-slider.three-tabs {
-  grid-template-columns: 1fr 1fr 1fr;
-}
-.tab-btn {
-  padding: 0.65rem 0.35rem;
-  border-radius: 11px;
+.nav-tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
   background: transparent;
   border: none;
-  color: #497167;
-  font-size: 0.74rem;
-  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0.35rem 0.2rem;
+  border-radius: 14px;
+  transition: all 0.2s;
+}
+.nav-icon-box {
+  width: 38px;
+  height: 30px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
-  cursor: pointer;
-  white-space: nowrap;
   transition: all 0.2s;
 }
-.tab-btn.active {
-  background: #53BDA5;
-  color: #ffffff;
-  box-shadow: 0 3px 12px rgba(83, 189, 165, 0.35);
+.nav-tab-title {
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+.nav-tab-item.active {
+  color: #53BDA5;
+}
+.nav-tab-item.active .nav-icon-box {
+  background: #edf8f5;
+  color: #53BDA5;
+}
+.nav-tab-item:active {
+  transform: scale(0.92);
 }
 
-/* Main Container */
+/* Main Wrapper */
 .app-main {
   max-width: 480px;
   margin: 0 auto;
@@ -368,11 +392,14 @@ body.theme-body {
 .btn-primary-compact {
   padding: 0.45rem 0.85rem;
   border-radius: 10px;
-  background: #53BDA5;
+  background: linear-gradient(135deg, #53BDA5 0%, #3ca08a 100%);
   border: none;
   color: #ffffff;
   font-size: 0.72rem;
   font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(83, 189, 165, 0.35);
   transition: transform 0.2s;
@@ -419,7 +446,7 @@ body.theme-body {
   align-items: center;
   gap: 0.85rem;
 }
-.arabic-tag {
+.prayer-badge-icon {
   width: 42px;
   height: 42px;
   border-radius: 13px;
@@ -428,8 +455,6 @@ body.theme-body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.82rem;
-  font-weight: 900;
   color: #53BDA5;
 }
 .pc-title-row {
@@ -470,6 +495,9 @@ body.theme-body {
   color: #3ba48c;
   font-size: 0.72rem;
   font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   cursor: pointer;
 }
 .btn-cross {
@@ -480,6 +508,9 @@ body.theme-body {
   color: #e11d48;
   font-size: 0.72rem;
   font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   cursor: pointer;
 }
 .btn-status-badge {
@@ -488,6 +519,9 @@ body.theme-body {
   font-size: 0.72rem;
   font-weight: 800;
   border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   cursor: pointer;
 }
 .btn-status-badge.offered {
@@ -571,7 +605,7 @@ body.theme-body {
   width: 100%;
   padding: 0.85rem;
   border-radius: 16px;
-  background: #53BDA5;
+  background: linear-gradient(135deg, #53BDA5 0%, #3ba48c 100%);
   border: none;
   color: #ffffff;
   font-size: 0.85rem;
@@ -617,18 +651,18 @@ body.theme-body {
   color: #0f172a;
 }
 
-/* Missed Qaza Section */
+/* ================= MISSED QAZA DAYS LIST (RED CARDS) ================= */
 .missed-panel-header {
   background: #ffffff;
-  border: 1px solid #c9eee5;
+  border: 1px solid #fecdd3;
   border-radius: 18px;
   padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.05);
 }
 .mph-title {
   font-size: 0.95rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #9f1239;
 }
 .mph-sub {
   font-size: 0.68rem;
@@ -638,36 +672,94 @@ body.theme-body {
 .missed-list-content {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.75rem;
 }
-.missed-day-row {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 0.85rem;
+.missed-day-card {
+  background: #fff5f5;
+  border: 1.5px solid #fecdd3;
+  border-radius: 18px;
+  padding: 1rem;
+  box-shadow: 0 3px 12px rgba(225, 29, 72, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.md-header-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(254, 205, 211, 0.6);
+  padding-bottom: 0.5rem;
 }
-.md-date {
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: #0f172a;
-}
-.md-prayers {
+.md-date-tag {
   display: flex;
-  gap: 0.3rem;
-  flex-wrap: wrap;
-}
-.missed-pill {
-  font-size: 0.62rem;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
   font-weight: 800;
-  padding: 0.15rem 0.4rem;
-  border-radius: 6px;
-  background: #edf8f5;
-  color: #3ba48c;
-  border: 1px solid #c9eee5;
+  color: #9f1239;
+  letter-spacing: 0.3px;
+}
+.md-count-pill {
+  font-size: 0.65rem;
+  font-weight: 800;
+  background: #ffe4e6;
+  color: #e11d48;
+  padding: 0.2rem 0.5rem;
+  border-radius: 99px;
+  border: 1px solid #fecdd3;
+}
+.md-prayers-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.missed-single-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #fee2e2;
+  border-radius: 12px;
+  padding: 0.5rem 0.75rem;
+}
+.msi-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.msi-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e11d48;
+}
+.msi-name {
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #881337;
+}
+.msi-rakat {
+  font-size: 0.68rem;
+  color: #64748b;
+}
+.btn-ada-single {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border: none;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.35rem 0.65rem;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+  transition: transform 0.15s;
+}
+.btn-ada-single:active {
+  transform: scale(0.92);
 }
 
 /* Modals */
@@ -755,18 +847,18 @@ body.theme-body {
   background: #f1f5f9;
 }
 .menu-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 0.5rem;
 }
-.menu-icon.teal { background: #edf8f5; color: #53BDA5; }
-.menu-icon.teal-light { background: #e0f4ef; color: #3ba48c; }
-.menu-icon.teal-dark { background: #c9eee5; color: #237b67; }
-.menu-icon.soft-teal { background: #edf8f5; color: #53BDA5; }
+.menu-icon.teal { background: #edf8f5; }
+.menu-icon.rose { background: #ffe4e6; }
+.menu-icon.teal-dark { background: #c9eee5; }
+.menu-icon.soft-teal { background: #edf8f5; }
 .menu-item h4 { font-size: 0.85rem; font-weight: 800; color: #0f172a; }
 .menu-item p { font-size: 0.65rem; color: #64748b; }
 
@@ -866,10 +958,10 @@ body.theme-body {
   text-align: center;
 }
 .splash-icon {
-  width: 72px;
-  height: 72px;
+  width: 76px;
+  height: 76px;
   border-radius: 24px;
-  background: #53BDA5;
+  background: linear-gradient(135deg, #53BDA5 0%, #369c85 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -888,7 +980,6 @@ body.theme-body {
   font-size: 0.95rem;
   color: #3ba48c;
   margin: 0.4rem 0 1.5rem 0;
-  font-family: system-ui, -apple-system, sans-serif;
   direction: rtl;
 }
 .loading-track {
