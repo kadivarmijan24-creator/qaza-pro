@@ -1,43 +1,13 @@
 const PRAYER_KEYS = [
-  { 
-    id: 'fajr', 
-    name: 'ફજર', 
-    rakat: '૨ ફર્ઝ',
-    svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><circle cx="12" cy="14" r="4" fill="#53BDA5" fill-opacity="0.2" stroke="#53BDA5" stroke-width="1.8"/><path d="M12 4V7M5 14H2M22 14H19M6.5 8.5L4.5 6.5M19.5 6.5L17.5 8.5M3 19H21" stroke="#53BDA5" stroke-width="1.8" stroke-linecap="round"/></svg>'
-  },
-  { 
-    id: 'dhuhr', 
-    name: 'ઝોહર', 
-    rakat: '૪ ફર્ઝ',
-    svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><circle cx="12" cy="12" r="5" fill="#53BDA5" fill-opacity="0.25" stroke="#53BDA5" stroke-width="1.8"/><path d="M12 2V5M12 19V22M2 12H5M19 12H22M4.9 4.9L7 7M17 17L19.1 19.1M4.9 19.1L7 17M17 7L19.1 4.9" stroke="#53BDA5" stroke-width="1.8" stroke-linecap="round"/></svg>'
-  },
-  { 
-    id: 'asr', 
-    name: 'અસર', 
-    rakat: '૪ ફર્ઝ',
-    svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><circle cx="12" cy="12" r="8" stroke="#53BDA5" stroke-width="1.8"/><polyline points="12 7 12 12 16 14" stroke="#53BDA5" stroke-width="1.8" stroke-linecap="round"/></svg>'
-  },
-  { 
-    id: 'maghrib', 
-    name: 'મગરિબ', 
-    rakat: '૩ ફર્ઝ',
-    svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M12 16C9 16 7 13.5 7 10C7 6.5 9.5 4 12 3C11 5.5 11.5 8.5 13.5 10.5C15.5 12.5 18.5 13 21 12C20 14.5 17.5 16 14 16H12Z" fill="#53BDA5" fill-opacity="0.2" stroke="#53BDA5" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 20H21" stroke="#53BDA5" stroke-width="2" stroke-linecap="round"/></svg>'
-  },
-  { 
-    id: 'isha', 
-    name: 'ઈશા', 
-    rakat: '૪ ફર્ઝ',
-    svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M19 13C17.5 17.5 12.5 19.5 8 18C4 16.5 2 12 3.5 8C4.5 5 7 3.5 10 3C9 5 9.5 7.5 11 9.5C12.8 11.8 16 12.5 19 11.5V13Z" fill="#53BDA5" fill-opacity="0.25" stroke="#53BDA5" stroke-width="1.8"/><circle cx="17" cy="5" r="1" fill="#53BDA5"/><circle cx="20" cy="8" r="1" fill="#53BDA5"/></svg>'
-  },
-  { 
-    id: 'witr', 
-    name: 'વિત્ર', 
-    rakat: '૩ વાજિબ',
-    svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M12 2L15 8.5L22 9.5L17 14.5L18.5 21.5L12 18L5.5 21.5L7 14.5L2 9.5L9 8.5L12 2Z" fill="#53BDA5" fill-opacity="0.2" stroke="#53BDA5" stroke-width="1.8" stroke-linejoin="round"/></svg>'
-  }
+  { id: 'fajr', num: '1', name: 'ફજર', rakat: '૨ ફર્ઝ' },
+  { id: 'dhuhr', num: '2', name: 'ઝોહર', rakat: '૪ ફર્ઝ' },
+  { id: 'asr', num: '3', name: 'અસર', rakat: '૪ ફર્ઝ' },
+  { id: 'maghrib', num: '4', name: 'મગરિબ', rakat: '૩ ફર્ઝ' },
+  { id: 'isha', num: '5', name: 'ઈશા', rakat: '૪ ફર્ઝ' },
+  { id: 'witr', num: '6', name: 'વિત્ર', rakat: '૩ વાજિબ' }
 ];
 
-const STORAGE_KEY = 'qaza_pro_mint_tabs_v6';
+const STORAGE_KEY = 'qaza_pro_pure_v9';
 
 let state = {
   initialTotal: 0,
@@ -60,51 +30,49 @@ function formatToDDMMYYYY(dateStr) {
   return `${d}/${m}/${y}`;
 }
 
-function getCalculatedTimes(dateObj = new Date()) {
-  const dayOfYear = Math.floor((dateObj - new Date(dateObj.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-  const b = (2 * Math.PI * (dayOfYear - 81)) / 365;
-  const eot = 9.87 * Math.sin(2 * b) - 7.53 * Math.cos(b) - 1.5 * Math.sin(b);
-  const solarNoonMinutes = 12 * 60 + 40 - eot;
-  const seasonalVariation = Math.sin((dayOfYear - 80) * (Math.PI / 182)) * 35;
+function getHijriDate(dateObj = new Date()) {
+  const hijriMonths = [
+    'મુહર્રમ', 'સફર', 'રબીઉલ અવ્વલ', 'રબીઉસ્સાની',
+    'જમાદિલ અવ્વલ', 'જમાદિસ્સાની', 'રજબ', 'શાબાન',
+    'રમઝાન', 'શવ્વાલ', 'ઝિલકદ', 'ઝિલહિજ્જ'
+  ];
 
-  const sunriseMin = Math.round(6 * 60 + 30 - seasonalVariation);
-  const sunsetMin = Math.round(18 * 60 + 35 + seasonalVariation);
-  const fajrMin = Math.round(sunriseMin - 75);
-  const dhuhrMin = Math.round(solarNoonMinutes);
-  const asrMin = Math.round(dhuhrMin + (sunsetMin - dhuhrMin) * 0.62);
-  const maghribMin = sunsetMin;
-  const ishaMin = Math.round(sunsetMin + 75);
-  const witrMin = ishaMin + 25;
+  let day = dateObj.getDate();
+  let month = dateObj.getMonth();
+  let year = dateObj.getFullYear();
 
-  return {
-    fajr: minutesToTime12(fajrMin),
-    fajrRaw: fajrMin,
-    dhuhr: minutesToTime12(dhuhrMin),
-    dhuhrRaw: dhuhrMin,
-    asr: minutesToTime12(asrMin),
-    asrRaw: asrMin,
-    maghrib: minutesToTime12(maghribMin),
-    maghribRaw: maghribMin,
-    isha: minutesToTime12(ishaMin),
-    ishaRaw: ishaMin,
-    witr: minutesToTime12(witrMin),
-    witrRaw: witrMin,
-    sunriseRaw: sunriseMin,
-    sunsetRaw: sunsetMin
-  };
+  let m = month + 1;
+  let y = year;
+  if (m < 3) {
+    y -= 1;
+    m += 12;
+  }
+
+  let a = Math.floor(y / 100);
+  let b = 2 - a + Math.floor(a / 4);
+  let jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + day + b - 1524;
+
+  let l = jd - 1948440 + 10632;
+  let n = Math.floor((l - 1) / 10631);
+  l = l - 10631 * n + 354;
+  let j = (Math.floor((10985 - l) / 5316)) * (Math.floor((50 * l) / 17719)) + (Math.floor(l / 5670)) * (Math.floor((43 * l) / 15238));
+  l = l - (Math.floor((30 - j) / 15)) * (Math.floor((17719 * j) / 50)) - (Math.floor(j / 16)) * (Math.floor((15238 * j) / 43)) + 29;
+  let hm = Math.floor((24 * l) / 709);
+  let hd = l - Math.floor((709 * hm) / 24);
+  let hy = 30 * n + j - 30;
+
+  return `${hd} ${hijriMonths[hm - 1]} ${hy} AH`;
 }
 
-function minutesToTime12(totalMinutes) {
-  let mins = (totalMinutes + 1440) % 1440;
-  let h = Math.floor(mins / 60);
-  let m = mins % 60;
-  const ampm = h >= 12 ? 'PM' : 'AM';
-  h = h % 12 || 12;
-  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')} ${ampm}`;
-}
-
+// Audio & Tactile Haptic Trigger
 let audioCtx = null;
-function playBeep(freq = 500, duration = 0.08) {
+function playTouchHaptic(type = 'click') {
+  if (navigator.vibrate) {
+    if (type === 'click') navigator.vibrate(22);
+    else if (type === 'success') navigator.vibrate([30, 50, 30]);
+    else if (type === 'missed') navigator.vibrate([50, 40, 50]);
+  }
+
   if (!state.sound) return;
   try {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -112,11 +80,26 @@ function playBeep(freq = 500, duration = 0.08) {
     const gain = audioCtx.createGain();
     osc.connect(gain);
     gain.connect(audioCtx.destination);
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-    gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-    osc.start();
-    osc.stop(audioCtx.currentTime + duration);
+
+    if (type === 'click') {
+      osc.frequency.setValueAtTime(540, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.06);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.06);
+    } else if (type === 'success') {
+      osc.frequency.setValueAtTime(680, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.14);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.14);
+    } else if (type === 'missed') {
+      osc.frequency.setValueAtTime(240, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.12);
+    }
   } catch (e) {}
 }
 
@@ -129,14 +112,14 @@ function init() {
   }
 
   ensureDateRecord(viewingDate);
-  setInterval(updateLiveClockAndPrayerCountdown, 1000);
-  updateLiveClockAndPrayerCountdown();
+  const hijriEl = document.getElementById('hijri-date-display');
+  if (hijriEl) hijriEl.innerText = getHijriDate(new Date());
   renderApp();
 
   setTimeout(() => {
     const splash = document.getElementById('splash-screen');
     if (splash) splash.classList.add('hidden');
-  }, 1300);
+  }, 1200);
 }
 
 function ensureDateRecord(dateStr) {
@@ -158,6 +141,7 @@ function saveState() {
 }
 
 function triggerDatePicker() {
+  playTouchHaptic('click');
   const input = document.getElementById('hidden-date-picker');
   if (input && input.showPicker) {
     input.showPicker();
@@ -166,12 +150,14 @@ function triggerDatePicker() {
 
 function onDateSelected(val) {
   if (!val) return;
+  playTouchHaptic('click');
   viewingDate = val;
   ensureDateRecord(viewingDate);
   renderApp();
 }
 
 function navigateDay(offset) {
+  playTouchHaptic('click');
   const [y, m, d] = viewingDate.split('-').map(Number);
   const dt = new Date(y, m - 1, d);
   dt.setDate(dt.getDate() + offset);
@@ -181,7 +167,7 @@ function navigateDay(offset) {
 }
 
 function switchTab(tab) {
-  playBeep(450, 0.05);
+  playTouchHaptic('click');
   const tabs = ['daily', 'qaza', 'missed'];
 
   tabs.forEach(t => {
@@ -201,75 +187,8 @@ function switchTab(tab) {
   }
 }
 
-function updateLiveClockAndPrayerCountdown() {
-  const now = new Date();
-  const h = now.getHours();
-  const m = now.getMinutes();
-  const s = now.getSeconds();
-  const ampm = h >= 12 ? 'PM' : 'AM';
-  const h12 = h % 12 || 12;
-
-  document.getElementById('clock-live').innerText = 
-    `${String(h12).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')} ${ampm}`;
-
-  const currentMinutes = h * 60 + m;
-  const solar = getCalculatedTimes(now);
-
-  const timesOrder = [
-    { name: 'ફજર', raw: solar.fajrRaw, formatted: solar.fajr },
-    { name: 'ઝોહર', raw: solar.dhuhrRaw, formatted: solar.dhuhr },
-    { name: 'અસર', raw: solar.asrRaw, formatted: solar.asr },
-    { name: 'મગરિબ', raw: solar.maghribRaw, formatted: solar.maghrib },
-    { name: 'ઈશા', raw: solar.ishaRaw, formatted: solar.isha },
-    { name: 'વિત્ર', raw: solar.witrRaw, formatted: solar.witr }
-  ];
-
-  let nextP = timesOrder.find(t => t.raw > currentMinutes);
-  let diff = 0;
-
-  if (nextP) {
-    diff = nextP.raw - currentMinutes;
-    document.getElementById('next-prayer-name').innerText = nextP.name;
-    document.getElementById('next-prayer-time-badge').innerText = nextP.formatted;
-    document.getElementById('next-prayer-status').innerText = 'સાચો વક્ત';
-  } else {
-    diff = (1440 - currentMinutes) + solar.fajrRaw;
-    document.getElementById('next-prayer-name').innerText = 'ફજર';
-    document.getElementById('next-prayer-time-badge').innerText = solar.fajr;
-    document.getElementById('next-prayer-status').innerText = 'આવતીકાલે';
-  }
-
-  const diffHours = Math.floor(diff / 60);
-  const diffMins = diff % 60;
-  const diffSecs = 59 - s;
-  document.getElementById('next-prayer-timer').innerText = 
-    `${String(diffHours).padStart(2, '0')}:${String(diffMins).padStart(2, '0')}:${String(diffSecs).padStart(2, '0')}`;
-
-  checkMakruhStatus(currentMinutes, solar);
-}
-
-function checkMakruhStatus(currentMin, solar) {
-  const m1 = currentMin >= solar.sunriseRaw && currentMin <= (solar.sunriseRaw + 20);
-  const m2 = currentMin >= (solar.dhuhrRaw - 15) && currentMin <= solar.dhuhrRaw;
-  const m3 = currentMin >= (solar.sunsetRaw - 20) && currentMin <= solar.sunsetRaw;
-
-  const card = document.getElementById('makruh-card');
-  const badge = document.getElementById('makruh-badge');
-  const title = document.getElementById('makruh-title');
-
-  if (m1 || m2 || m3) {
-    card.className = 'makruh-card active';
-    badge.innerText = 'મકરુહ વક્ત ચાલુ છે';
-    title.innerText = 'હાલ નમાઝ પઢવી મનાઈ છે!';
-  } else {
-    card.className = 'makruh-card normal';
-    badge.innerText = 'કઝા પઢવાનો વક્ત';
-    title.innerText = 'હવે કઝા નમાઝ પઢી શકાય છે';
-  }
-}
-
 function markOffered(pId) {
-  playBeep(650, 0.08);
+  playTouchHaptic('success');
   if (state.historyRecords[viewingDate][pId] === 'missed') {
     if (state.qazaCounts[pId] > 0) state.qazaCounts[pId]--;
   }
@@ -278,7 +197,7 @@ function markOffered(pId) {
 }
 
 function markMissed(pId) {
-  playBeep(240, 0.15);
+  playTouchHaptic('missed');
   if (state.historyRecords[viewingDate][pId] !== 'missed') {
     state.qazaCounts[pId]++;
     state.initialTotal++;
@@ -288,6 +207,7 @@ function markMissed(pId) {
 }
 
 function resetStatus(pId) {
+  playTouchHaptic('click');
   if (state.historyRecords[viewingDate][pId] === 'missed') {
     if (state.qazaCounts[pId] > 0) state.qazaCounts[pId]--;
   }
@@ -296,7 +216,7 @@ function resetStatus(pId) {
 }
 
 function markAllTodayOffered() {
-  playBeep(700, 0.15);
+  playTouchHaptic('success');
   PRAYER_KEYS.forEach(p => {
     if (state.historyRecords[viewingDate][p.id] === 'missed') {
       if (state.qazaCounts[p.id] > 0) state.qazaCounts[p.id]--;
@@ -308,7 +228,7 @@ function markAllTodayOffered() {
 
 function modifyQaza(pId, delta) {
   if (state.qazaCounts[pId] + delta < 0) return;
-  playBeep(delta > 0 ? 550 : 450, 0.06);
+  playTouchHaptic(delta > 0 ? 'missed' : 'success');
   state.qazaCounts[pId] += delta;
   const total = Object.values(state.qazaCounts).reduce((a, b) => a + b, 0);
   if (total > state.initialTotal) state.initialTotal = total;
@@ -321,13 +241,13 @@ function deductWholeDay() {
     alert('કેટલીક નમાઝ ૦ હોવાથી આખો દિવસ બાદ કરી શકાશે નહીં.');
     return;
   }
-  playBeep(800, 0.2);
+  playTouchHaptic('success');
   PRAYER_KEYS.forEach(p => state.qazaCounts[p.id]--);
   saveState();
 }
 
 function markSingleMissedPrayerDone(dateKey, prayerId) {
-  playBeep(750, 0.15);
+  playTouchHaptic('success');
   if (state.historyRecords[dateKey] && state.historyRecords[dateKey][prayerId] === 'missed') {
     state.historyRecords[dateKey][prayerId] = 'offered';
     if (state.qazaCounts[prayerId] > 0) {
@@ -347,9 +267,7 @@ function renderApp() {
   const isToday = viewingDate === getTodayDateStr();
   document.getElementById('selected-date-title').innerText = isToday ? 'આજનો હિસાબ' : `તારીખ: ${formatToDDMMYYYY(viewingDate)}`;
 
-  const [y, m, d] = viewingDate.split('-').map(Number);
-  const solarOfDate = getCalculatedTimes(new Date(y, m - 1, d));
-
+  // 1. Render Daily Prayers with Numbers (1, 2, 3...)
   const dailyBox = document.getElementById('daily-prayers-list');
   dailyBox.innerHTML = '';
   let offeredCount = 0;
@@ -358,7 +276,6 @@ function renderApp() {
     const status = currentRecord[p.id];
     if (status === 'offered') offeredCount++;
 
-    const dynamicTime = solarOfDate[p.id];
     const card = document.createElement('div');
     card.className = 'prayer-card';
 
@@ -366,38 +283,21 @@ function renderApp() {
     if (status === 'pending') {
       actionHTML = `
         <div class="btn-action-group">
-          <button onclick="markOffered('${p.id}')" class="btn-check">
-            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
-            પઢી
-          </button>
-          <button onclick="markMissed('${p.id}')" class="btn-cross">
-            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            કઝા
-          </button>
+          <button onclick="markOffered('${p.id}')" class="btn-check">પઢી</button>
+          <button onclick="markMissed('${p.id}')" class="btn-cross">કઝા</button>
         </div>`;
     } else if (status === 'offered') {
-      actionHTML = `
-        <button onclick="resetStatus('${p.id}')" class="btn-status-badge offered">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
-          અદા થઈ
-        </button>`;
+      actionHTML = `<button onclick="resetStatus('${p.id}')" class="btn-status-badge offered">અદા થઈ ✓</button>`;
     } else {
-      actionHTML = `
-        <button onclick="resetStatus('${p.id}')" class="btn-status-badge missed">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-          કઝા થઈ
-        </button>`;
+      actionHTML = `<button onclick="resetStatus('${p.id}')" class="btn-status-badge missed">કઝા થઈ ✕</button>`;
     }
 
     card.innerHTML = `
       <div class="pc-left">
-        <div class="prayer-badge-icon">${p.svg}</div>
+        <div class="number-badge">${p.num}</div>
         <div>
-          <div class="pc-title-row">
-            <h4 class="pc-name">${p.name}</h4>
-            <span class="pc-rakat">${p.rakat}</span>
-          </div>
-          <span class="pc-time-dynamic">${dynamicTime}</span>
+          <span class="pc-name">${p.name}</span>
+          <span class="pc-rakat">${p.rakat}</span>
         </div>
       </div>
       ${actionHTML}
@@ -409,6 +309,7 @@ function renderApp() {
   const percent = Math.round((offeredCount / 6) * 100);
   document.getElementById('daily-ratio-badge').innerText = `${percent}%`;
 
+  // 2. Render Qaza Counter with Numbers (1, 2, 3...)
   const qazaBox = document.getElementById('qaza-cards-container');
   qazaBox.innerHTML = '';
   let totalQaza = 0;
@@ -421,10 +322,10 @@ function renderApp() {
     row.className = 'prayer-card';
     row.innerHTML = `
       <div class="pc-left">
-        <div class="prayer-badge-icon">${p.svg}</div>
+        <div class="number-badge">${p.num}</div>
         <div>
-          <h4 class="pc-name">${p.name}</h4>
-          <span class="pc-time-dynamic">${p.rakat}</span>
+          <span class="pc-name">${p.name}</span>
+          <span class="pc-rakat">${p.rakat}</span>
         </div>
       </div>
       <div class="qc-action-box">
@@ -464,9 +365,11 @@ function renderApp() {
 
 function renderMissedLogList() {
   const container = document.getElementById('missed-days-container');
+  const analyticsBar = document.getElementById('missed-analytics-bar');
   if (!container) return;
 
   const datesWithMissed = [];
+  const missedStats = { fajr: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0, witr: 0 };
 
   Object.keys(state.historyRecords).sort().reverse().forEach(dateKey => {
     const dayRecord = state.historyRecords[dateKey];
@@ -475,6 +378,7 @@ function renderMissedLogList() {
     PRAYER_KEYS.forEach(p => {
       if (dayRecord[p.id] === 'missed') {
         missedList.push(p);
+        missedStats[p.id]++;
       }
     });
 
@@ -483,9 +387,18 @@ function renderMissedLogList() {
     }
   });
 
+  if (analyticsBar) {
+    analyticsBar.innerHTML = PRAYER_KEYS.map(p => `
+      <div class="analytics-pill">
+        <span>${p.name}:</span>
+        <strong>${missedStats[p.id]}</strong>
+      </div>
+    `).join('');
+  }
+
   if (datesWithMissed.length === 0) {
     container.innerHTML = `
-      <div style="text-align: center; padding: 2.5rem 1rem; color: #497167; font-size: 0.85rem; background: #ffffff; border-radius: 18px; border: 1px solid #c9eee5; box-shadow: 0 2px 8px rgba(83, 189, 165, 0.05);">
+      <div style="text-align: center; padding: 2.5rem 1rem; color: #5c7f76; font-size: 0.85rem; background: #ffffff; border-radius: 18px; border: 1px solid #d7e4df; box-shadow: 0 2px 8px rgba(9, 69, 55, 0.03);">
         અલહમ્દુલિલ્લાહ, હાલ કોઈ દિવસની કઝા બાકી નથી!
       </div>
     `;
@@ -513,8 +426,7 @@ function renderMissedLogList() {
               </div>
             </div>
             <button onclick="markSingleMissedPrayerDone('${item.date}', '${p.id}')" class="btn-ada-single" title="આ નમાઝ પઢાઈ ગઈ">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-              અદા થઈ
+              અદા થઈ ✓
             </button>
           </div>
         `).join('')}
@@ -523,16 +435,25 @@ function renderMissedLogList() {
   `).join('');
 }
 
-function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+function openModal(id) { 
+  playTouchHaptic('click');
+  document.getElementById(id).classList.remove('hidden'); 
+}
+
+function closeModal(id) { 
+  playTouchHaptic('click');
+  document.getElementById(id).classList.add('hidden'); 
+}
 
 function toggleSound() {
   state.sound = !state.sound;
+  playTouchHaptic('click');
   document.getElementById('menu-sound-status').innerText = state.sound ? 'ચાલુ છે' : 'બંધ છે';
   saveState();
 }
 
 function saveInitialCalculation() {
+  playTouchHaptic('success');
   const y = parseInt(document.getElementById('calc-years').value) || 0;
   const m = parseInt(document.getElementById('calc-months').value) || 0;
   const d = parseInt(document.getElementById('calc-days').value) || 0;
@@ -553,10 +474,11 @@ function saveInitialCalculation() {
 }
 
 function exportData() {
+  playTouchHaptic('click');
   const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `qaza_pro_backup_${formatToDDMMYYYY(getTodayDateStr()).replace(/\//g, '-')}.json`;
+  a.download = `qaza_backup_${formatToDDMMYYYY(getTodayDateStr()).replace(/\//g, '-')}.json`;
   a.click();
 }
 
@@ -570,6 +492,7 @@ function importData(e) {
       if (data.qazaCounts) {
         state = data;
         saveState();
+        playTouchHaptic('success');
         alert('ડેટા રિસ્ટોર થઈ ગયો!');
         closeModal('menu-modal');
       }

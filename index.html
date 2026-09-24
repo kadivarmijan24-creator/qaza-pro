@@ -3,24 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Qaza Pro | નમાઝ અને કઝા ટ્રેકર</title>
+  <title>Qaza Pro | શાહી કઝા નમાઝ ટ્રેકર</title>
 
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="QazaPro">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#53BDA5">
+  <meta name="theme-color" content="#094537">
 
-  <link rel="stylesheet" href="style.css?v=6" />
+  <link rel="stylesheet" href="style.css" />
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=6', { scope: './' })
-          .then((reg) => {
-            reg.update();
-            console.log('SW Ready v6');
-          })
+        navigator.serviceWorker.register('./sw.js?v=8', { scope: './' })
+          .then((reg) => reg.update())
           .catch((e) => console.log('SW Error', e));
       });
     }
@@ -32,11 +29,9 @@
   <div id="splash-screen" class="splash-screen">
     <div class="splash-center">
       <div class="splash-icon">
-        <svg viewBox="0 0 32 32" width="46" height="46" fill="none">
-          <path d="M16 2.5C14 6 9 8 9 14.5V26.5H23V14.5C23 8 18 6 16 2.5Z" fill="rgba(255,255,255,0.22)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round"/>
-          <path d="M16 7V17M12.5 13.5H19.5" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
-          <circle cx="16" cy="22" r="2" fill="#ffffff"/>
-          <path d="M6 26.5H26" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+        <svg viewBox="0 0 32 32" width="48" height="48" fill="none">
+          <circle cx="16" cy="16" r="14" stroke="#d4af37" stroke-width="1.8" stroke-dasharray="4 3"/>
+          <path d="M16 6v10l6 4" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </div>
       <h1 class="splash-title">QAZA<span>PRO</span></h1>
@@ -47,93 +42,52 @@
     </div>
   </div>
 
-  <!-- Top Header -->
+  <!-- App Header -->
   <header class="app-header">
     <div class="header-inner">
       <div class="brand-wrap">
         <div class="brand-badge">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
-            <path d="M12 2C10.5 4.8 6.5 6.5 6.5 11.5V20H17.5V11.5C17.5 6.5 13.5 4.8 12 2Z" fill="rgba(255,255,255,0.2)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="M12 6V13M9.5 10H14.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
-            <path d="M4 20H20" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="#d4af37" stroke-width="1.8"/>
+            <path d="M12 6v6l4 2.5" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
         </div>
         <div>
           <h1 class="brand-title">QAZA<span>PRO</span></h1>
-          <p id="clock-live" class="brand-clock">12:00:00 AM</p>
+          <p id="hijri-date-display" class="brand-subtitle">હિજરી કેલેન્ડર ગણતરી...</p>
         </div>
       </div>
 
       <div class="header-actions">
-        <button onclick="openModal('menu-modal')" class="icon-btn" title="મેનૂ">
+        <button onclick="openModal('menu-modal')" class="icon-btn" title="સેટિંગ્સ & મેનૂ">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <rect x="4" y="4" width="6.5" height="6.5" rx="2" fill="#53BDA5" fill-opacity="0.2" stroke="#53BDA5" stroke-width="1.6"/>
-            <rect x="13.5" y="4" width="6.5" height="6.5" rx="2" stroke="#64748b" stroke-width="1.6"/>
-            <rect x="4" y="13.5" width="6.5" height="6.5" rx="2" stroke="#64748b" stroke-width="1.6"/>
-            <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2" fill="#53BDA5" fill-opacity="0.2" stroke="#53BDA5" stroke-width="1.6"/>
+            <circle cx="12" cy="12" r="1.5" fill="#d4af37"/>
+            <circle cx="12" cy="6" r="1.5" fill="#d4af37"/>
+            <circle cx="12" cy="18" r="1.5" fill="#d4af37"/>
           </svg>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main Container -->
   <main class="app-main">
 
-    <!-- Makruh Indicator Card -->
-    <div id="makruh-card" class="makruh-card normal">
-      <div class="makruh-info">
-        <div class="makruh-icon" id="makruh-icon-box">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <path d="M12 3L20 7.5V13C20 17.5 16.5 21 12 22C7.5 21 4 17.5 4 13V7.5L12 3Z" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div>
-          <span id="makruh-badge" class="badge-tag">કઝા પઢવાનો વક્ત</span>
-          <h4 id="makruh-title" class="status-title">હવે કઝા નમાઝ પઢી શકાય છે</h4>
-        </div>
-      </div>
-      <button onclick="openModal('makruh-modal')" class="link-label">વક્ત લિસ્ટ ▾</button>
-    </div>
-
-    <!-- ================= VIEW 1: DAILY VIEW ================= -->
+    <!-- ================= VIEW 1: DAILY RECORD ================= -->
     <section id="view-daily" class="view-panel active">
-
-      <!-- Next Prayer Solar Card -->
-      <div class="next-prayer-card">
-        <div class="np-content">
-          <div class="np-left">
-            <span class="sub-label"><span class="ping-dot"></span> આગામી નમાઝ સમય</span>
-            <h2 id="next-prayer-name" class="np-title">ગણતરી ચાલુ...</h2>
-            <div class="np-badges">
-              <span id="next-prayer-time-badge" class="badge-time">--:-- --</span>
-              <span id="next-prayer-status" class="badge-sub">સાચો વક્ત</span>
-            </div>
-          </div>
-          <div class="np-right">
-            <div id="next-prayer-timer" class="countdown-clock">00:00:00</div>
-            <p class="cd-label">સમય બાકી</p>
-          </div>
-        </div>
-      </div>
-
+      
       <!-- Date Ribbon Selector -->
       <div class="date-selector-bar">
         <button onclick="navigateDay(-1)" class="nav-step-btn" title="ગઈકાલ">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
         <div class="date-input-field" onclick="triggerDatePicker()">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-            <rect x="3.5" y="4.5" width="17" height="16" rx="3" stroke="#53BDA5" stroke-width="1.8"/>
-            <path d="M3.5 9.5H20.5" stroke="#53BDA5" stroke-width="1.8"/>
-            <path d="M8 2.5V5.5M16 2.5V5.5" stroke="#53BDA5" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="8" cy="14" r="1.2" fill="#53BDA5"/>
-            <circle cx="12" cy="14" r="1.2" fill="#53BDA5"/>
-            <circle cx="16" cy="14" r="1.2" fill="#53BDA5"/>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#d4af37" stroke-width="1.8">
+            <rect x="3.5" y="4.5" width="17" height="16" rx="3"/>
+            <path d="M3.5 9.5H20.5M8 2.5V5.5M16 2.5V5.5"/>
           </svg>
           <div class="field-meta">
-            <span class="label-tiny">તારીખ પસંદ કરો (DD/MM/YYYY)</span>
+            <span class="label-tiny">તારીખ પસંદગી (DD/MM/YYYY)</span>
             <span id="visible-date-display" class="date-formatted-txt">--/--/----</span>
             <input type="date" id="hidden-date-picker" onchange="onDateSelected(this.value)" class="date-picker-hidden" />
           </div>
@@ -143,7 +97,7 @@
         </button>
       </div>
 
-      <!-- Daily Score Dashboard -->
+      <!-- Quick Summary Card -->
       <div class="daily-score-card">
         <div>
           <span id="selected-date-title" class="sub-label">આજનો હિસાબ</span>
@@ -151,19 +105,19 @@
         </div>
         <div class="score-right">
           <button onclick="markAllTodayOffered()" class="btn-primary-compact">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            બધી અદા થઈ
+            બધી અદા થઈ ✓
           </button>
           <div class="score-circle" id="daily-ratio-badge">0%</div>
         </div>
       </div>
 
-      <!-- Daily Prayers List -->
+      <!-- Prayers List Stack -->
       <div class="prayers-stack" id="daily-prayers-list"></div>
     </section>
 
-    <!-- ================= VIEW 2: QAZA COUNTER ================= -->
+    <!-- ================= VIEW 2: TOTAL QAZA COUNTER ================= -->
     <section id="view-qaza" class="view-panel">
+      <!-- Lifetime Total Progress Ring -->
       <div class="qaza-hero-card">
         <div class="qh-left">
           <span class="sub-label">કુલ બાકી કઝા નમાઝ</span>
@@ -184,22 +138,26 @@
         <strong id="estimated-date-display">-</strong>
       </div>
 
+      <!-- Deduct 1 Full Day Button -->
       <button onclick="deductWholeDay()" class="btn-primary-large">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        ૧ આખા દિવસની કઝા બાદ કરો (-1 All)
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        ૧ આખો દિવસ કઝા બાદ કરો (-1 All)
       </button>
 
-      <!-- Lifetime Prayers List -->
+      <!-- Prayers Counter Rows -->
       <div class="prayers-stack" id="qaza-cards-container"></div>
     </section>
 
-    <!-- ================= VIEW 3: MISSED QAZA DAYS LIST (RED CARDS) ================= -->
+    <!-- ================= VIEW 3: MISSED QAZA DAYS LIST ================= -->
     <section id="view-missed" class="view-panel">
+      <!-- Detailed Analytics Pill Strip -->
+      <div class="analytics-strip" id="missed-analytics-bar">
+        <!-- Injected via JavaScript -->
+      </div>
+
       <div class="missed-panel-header">
-        <div class="mph-title-box">
-          <h3 class="mph-title">છૂટેલી કઝા દિવસોની યાદી</h3>
-          <p class="mph-sub">કયા દિવસે કઈ નમાઝ છૂટી ગઈ છે તેની હિસ્ટ્રી</p>
-        </div>
+        <h3 class="mph-title">છૂટેલી કઝા દિવસોની યાદી</h3>
+        <p class="mph-sub">જે નમાઝ પઢાઈ જાય તેને 'અદા થઈ' બટન દબાવીને તુરંત હટાવો</p>
       </div>
 
       <div class="missed-list-content" id="missed-days-container"></div>
@@ -207,31 +165,23 @@
 
   </main>
 
-  <!-- ================= BOTTOM NAVIGATION BAR ================= -->
+  <!-- Bottom Navigation Bar -->
   <nav class="bottom-nav-bar">
     <div class="bottom-nav-inner">
       <button onclick="switchTab('daily')" id="tab-daily" class="nav-tab-item active">
         <div class="nav-icon-box">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
-            <circle cx="12" cy="10" r="4.5" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M12 2.5V4M12 16V17.5M4 10H2.5M17.5 10H16M6.3 4.3L5.2 3.2M18.8 16.8L17.7 15.7M6.3 15.7L5.2 16.8M18.8 3.2L17.7 4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M3 20H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
           </svg>
         </div>
-        <span class="nav-tab-title">દૈનિક હિસાબ</span>
+        <span class="nav-tab-title">દૈનિક નોંધ</span>
       </button>
 
       <button onclick="switchTab('qaza')" id="tab-qaza" class="nav-tab-item">
         <div class="nav-icon-box">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
-            <circle cx="12" cy="5" r="2.2" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="1.6"/>
-            <circle cx="17.5" cy="8" r="2.2" stroke="currentColor" stroke-width="1.6"/>
-            <circle cx="18.5" cy="14" r="2.2" stroke="currentColor" stroke-width="1.6"/>
-            <circle cx="14" cy="18.5" r="2.2" stroke="currentColor" stroke-width="1.6"/>
-            <circle cx="8" cy="18" r="2.2" stroke="currentColor" stroke-width="1.6"/>
-            <circle cx="5.5" cy="13" r="2.2" stroke="currentColor" stroke-width="1.6"/>
-            <circle cx="6.5" cy="7.5" r="2.2" stroke="currentColor" stroke-width="1.6"/>
-            <path d="M12 7.2V12L15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="9"/>
+            <polyline points="12 6 12 12 16 14"/>
           </svg>
         </div>
         <span class="nav-tab-title">કુલ કઝા (<span id="tab-badge-count">0</span>)</span>
@@ -239,10 +189,11 @@
 
       <button onclick="switchTab('missed')" id="tab-missed" class="nav-tab-item">
         <div class="nav-icon-box">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
-            <rect x="4" y="3.5" width="16" height="17" rx="3" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M12 8C10.5 8 9.5 9 9.5 10.5C9.5 12 10.5 13 12 13C12.8 13 13.5 12.6 14 12C13.2 12.8 12.5 12.4 12 12C11.2 11.5 11 10.5 11.5 9.8C12 9 13 8.8 13.8 9.2C13.3 8.4 12.7 8 12 8Z" fill="currentColor"/>
-            <path d="M8 16H16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
           </svg>
         </div>
         <span class="nav-tab-title">છૂટેલી કઝા</span>
@@ -250,7 +201,7 @@
     </div>
   </nav>
 
-  <!-- Menu Modal -->
+  <!-- Settings Modal -->
   <div id="menu-modal" class="modal-overlay hidden">
     <div class="modal-window">
       <div class="modal-header">
@@ -260,59 +211,41 @@
 
       <div class="menu-grid">
         <div onclick="closeModal('menu-modal'); openModal('guide-modal');" class="menu-item">
-          <div class="menu-icon teal">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-              <path d="M13 2.5L4.5 13H11.5L10.5 21.5L19.5 10.5H12.5L13 2.5Z" fill="#53BDA5" fill-opacity="0.25" stroke="#53BDA5" stroke-width="1.8" stroke-linejoin="round"/>
+          <div class="menu-icon gold">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
             </svg>
           </div>
           <div>
-            <h4>ઝડપી રીત</h4>
-            <p>કઝા પઢવાની સરળ ગાઇડ</p>
-          </div>
-        </div>
-
-        <div onclick="closeModal('menu-modal'); openModal('makruh-modal');" class="menu-item">
-          <div class="menu-icon rose">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-              <circle cx="12" cy="12" r="8.5" stroke="#e11d48" stroke-width="1.8"/>
-              <path d="M6 6L18 18" stroke="#e11d48" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div>
-            <h4>મકરુહ વક્ત</h4>
-            <p>મનાઈ કરેલા ૩ સમય</p>
+            <h4>ઝડપી પદ્ધતિ</h4>
+            <p>કઝા પઢવાની સરળ રીત</p>
           </div>
         </div>
 
         <div onclick="closeModal('menu-modal'); openModal('setup-modal');" class="menu-item">
-          <div class="menu-icon teal-dark">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-              <rect x="4.5" y="3.5" width="15" height="17" rx="3" stroke="#237b67" stroke-width="1.8"/>
-              <rect x="7.5" y="6.5" width="9" height="3" rx="1" fill="#237b67" fill-opacity="0.2" stroke="#237b67" stroke-width="1.2"/>
-              <circle cx="8.5" cy="13" r="1.2" fill="#237b67"/>
-              <circle cx="12" cy="13" r="1.2" fill="#237b67"/>
-              <circle cx="15.5" cy="13" r="1.2" fill="#237b67"/>
-              <circle cx="8.5" cy="16.5" r="1.2" fill="#237b67"/>
-              <circle cx="12" cy="16.5" r="1.2" fill="#237b67"/>
-              <circle cx="15.5" cy="16.5" r="1.2" fill="#237b67"/>
+          <div class="menu-icon teal">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <line x1="8" y1="6" x2="16" y2="6"/>
+              <line x1="8" y1="10" x2="16" y2="10"/>
+              <line x1="8" y1="14" x2="16" y2="14"/>
             </svg>
           </div>
           <div>
             <h4>કઝા સેટઅપ</h4>
-            <p>વર્ષ / દિવસ ગણતરી</p>
+            <p>વર્ષ / મહિના ગણતરી</p>
           </div>
         </div>
 
         <div onclick="toggleSound()" class="menu-item">
-          <div class="menu-icon soft-teal">
-            <svg id="menu-sound-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
-              <path d="M11 5L6 9H3V15H6L11 19V5Z" fill="#53BDA5" fill-opacity="0.2" stroke="#53BDA5" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M15.5 8.5C16.8 9.8 17.5 11 17.5 12C17.5 13 16.8 14.2 15.5 15.5" stroke="#53BDA5" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M19 6C20.8 7.8 22 9.8 22 12C22 14.2 20.8 16.2 19 18" stroke="#53BDA5" stroke-width="1.8" stroke-linecap="round"/>
+          <div class="menu-icon gray">
+            <svg id="menu-sound-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
             </svg>
           </div>
           <div>
-            <h4>સાઉન્ડ</h4>
+            <h4>સાઉન્ડ & હેપ્ટિક્સ</h4>
             <p id="menu-sound-status">ચાલુ છે</p>
           </div>
         </div>
@@ -320,11 +253,11 @@
 
       <div class="backup-actions">
         <button onclick="exportData()" class="text-action-btn">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
           બેકઅપ લો
         </button>
         <label class="text-action-btn">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
           રિસ્ટોર કરો
           <input type="file" accept=".json" class="file-hidden" onchange="importData(event)" />
         </label>
@@ -332,7 +265,7 @@
     </div>
   </div>
 
-  <!-- Guide Modal -->
+  <!-- Quick Guide Modal -->
   <div id="guide-modal" class="modal-overlay hidden">
     <div class="modal-window">
       <div class="modal-header">
@@ -350,35 +283,11 @@
         </div>
         <div class="info-card">
           <h4>૩. છેલ્લી ૨ રકાતમાં</h4>
-          <p>ઝોહર, અસર અને ઈશાની ત્રીજી-ચોથી રકાતમાં સૂરા ફાતિહાના બદલે ૩ વાર <strong>'સુબ્હાનલ્લાહ'</strong> કહી શકાય.</p>
+          <p>ઝોહર, અસર અને ઈશાની ૩જી-૪થી રકાતમાં સૂરા ફાતિહાના બદલે ૩ વાર <strong>'સુબ્હાનલ્લાહ'</strong> કહી શકાય.</p>
         </div>
         <div class="info-card">
           <h4>૪. વિત્ર દુઆ-એ-કુનૂત</h4>
           <p>દુઆ-એ-કુનૂતની જગ્યાએ ૩ વાર <strong>'અલ્લાહુમ્મગ્ફિર લી'</strong> કહીને રુકૂ કરી શકાય.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Makruh Modal -->
-  <div id="makruh-modal" class="modal-overlay hidden">
-    <div class="modal-window">
-      <div class="modal-header">
-        <h3 class="mh-title">મકરુહ વક્ત (નમાઝની મનાઈ)</h3>
-        <button onclick="closeModal('makruh-modal')" class="close-btn">&times;</button>
-      </div>
-      <div class="modal-scroll-text">
-        <div class="info-card danger">
-          <h4>૧. તુલૂ-એ-આફતાબ (સૂર્યોદય)</h4>
-          <p>સૂર્ય ઊગ્યા પછીની ૨૦ મિનિટ સુધી નમાઝ મનાઈ છે.</p>
-        </div>
-        <div class="info-card danger">
-          <h4>૨. ઝવાલ-એ-આફતાબ (બપોરે)</h4>
-          <p>ઝોહરનો વક્ત શરૂ થવાની ૧૫ મિનિટ પહેલાં નમાઝ મનાઈ છે.</p>
-        </div>
-        <div class="info-card danger">
-          <h4>૩. ગુરૂબ-એ-આફતાબ (સૂર્યાસ્ત)</h4>
-          <p>સૂર્યાસ્તની ૨૦ મિનિટ પહેલાંથી મગરિબ સુધી કઝા નમાઝ ન પઢવી.</p>
         </div>
       </div>
     </div>
@@ -415,6 +324,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=6"></script>
+  <script src="app.js"></script>
 </body>
 </html>
